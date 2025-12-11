@@ -1,0 +1,19 @@
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+
+class Dashboard extends MY_Owner
+{
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function index()
+    {
+        $this->template->title('Dashboard');
+        $this->setTitlePage('Dashboard');
+
+        $this->template->build('v_dashboard');
+    }
+}
