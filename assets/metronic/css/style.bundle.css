@@ -51540,3 +51540,12 @@ html:not([data-theme="dark"]) {
 .fluent-table tbody tr:last-child td {
     border-bottom: none;
 }
+
+.icon-eye-custom{
+    position: absolute;
+    top: 60%;
+    right: 15px;
+    transform: translateY(-10%);
+    cursor: pointer;
+    color: #888;
+}

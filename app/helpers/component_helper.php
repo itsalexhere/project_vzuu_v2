@@ -86,23 +86,38 @@ if (!function_exists('searchActionButtons')) {
 }
 
 if (!function_exists('addButtonForm')) {
-    function addButtonForm($insert_url, $titlePage = 'Data', $fullscreen = 0, $accessButton = 0)
+    function addButtonForm($insert_url, $label = 'Add Data', $fullscreen = 0, $accessButton = 0,$btnExport = false)
     {
         if ((int)$accessButton === 0) {
             return '';
         }
 
+        $export = '';
+        if($btnExport){
+            $export = ' <button class="btn btn-success btn-sm fw-bold" type="button" id="btnAdd"
+                data-type="modal"
+                data-url="' . base_url($insert_url) . '"
+                data-fullscreenmodal="' . $fullscreen . '">
+                <i class="fa-solid fa-download fs-4 me-2"></i>
+                Export
+            </button>';
+        }
+
         $button = '
         <div class="d-flex align-items-center gap-2 gap-lg-3">
+
+            '. $export.'
+
             <button class="btn btn-success btn-sm fw-bold" type="button" id="btnAdd"
                 data-type="modal"
                 data-url="' . base_url($insert_url) . '"
                 data-fullscreenmodal="' . $fullscreen . '">
                 <i class="fa-solid fa-plus fs-4 me-2"></i>
-                Tambah ' . $titlePage . '
+                ' . $label . '
             </button>
         </div>';
 
         return $button;
     }
 }
+

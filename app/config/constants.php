@@ -71,7 +71,7 @@ define('ASSETS', 'assets/' . THEME);
 define('ASSETSGENERAL', 'assets');
 
 define('LOGIN', 'login');
-define('BASE_URL', (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . '/project/');
+define('BASE_URL', (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . '/vzuu/');
 define('JS', BASE_URL . ASSETS . '/js');
 define('CSS', BASE_URL . ASSETS . '/css');
 define('FONT', BASE_URL . ASSETS . '/font');

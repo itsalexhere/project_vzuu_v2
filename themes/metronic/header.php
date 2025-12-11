@@ -33,7 +33,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 		<div class="app-container container-fluid">
 			<div class="app-navbar-item d-flex align-items-stretch flex-lg-grow-1">
-
+				<h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">
+					<?= $titlePage ?? "" ?>
+				</h1>
 			</div>
 			<!--begin::Navbar-->
 			<div class="app-navbar flex-shrink-0">

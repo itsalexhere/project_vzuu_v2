@@ -16,7 +16,8 @@ class Users extends MY_Owner
 			'data_menu',
 			'access_menu',
 			'showUserMenuById',
-			'process_access_menu'
+			'process_access_menu',
+			'detail'
 		];
 
 		parent::__construct();
@@ -30,13 +31,13 @@ class Users extends MY_Owner
 
 	public function index()
 	{
-		$this->template->title('Users');
-		$this->setTitlePage('Users');
+		$this->template->title('Manage User');
+		$this->setTitlePage('Manage User');
 		$this->setParent('Master');
 		$this->assetsBuild(['datatables']);
 		$this->setJs('users');
 
-		$header_table = array('username', 'email', 'status', "Action");
+		$header_table = array('User ID','name', 'email','status', 'joined date', "last active");
 
 		$data['tables'] = generateTableHtml($header_table);
 
@@ -61,8 +62,24 @@ class Users extends MY_Owner
 
 	public function insert()
 	{
-		$this->template->title('Add New Users');
-		$this->setTitlePage('Add New Users');
+		isAjaxRequestWithPost();
+
+		$data = array(
+			'title_modal' => 'Add User',
+			'url_form' => base_url() . "users/process",
+			'form' => $this->load->view('v_form', '', true),
+			'buttonName' => 'Confirm',
+		);
+		$html = $this->load->view($this->_v_form_modal, $data, true);
+
+		echo json_encode(array('html' => $html));
+		exit();
+	}
+
+	public function detail()
+	{
+		$this->template->title('Manage User');
+		$this->setTitlePage('Manage User');
 		$this->setParent('Master');
 		$this->setJs('user_details');
 
@@ -70,7 +87,7 @@ class Users extends MY_Owner
 			'roles_list' => $this->roles->show()
 		];
 
-		$this->template->build('v_form',$data);
+		$this->template->build('v_form_detail', $data);
 	}
 
 	public function process()

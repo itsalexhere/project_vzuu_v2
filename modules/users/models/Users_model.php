@@ -32,29 +32,9 @@ class Users_model extends MY_Model
     public function show()
     {
         $this->db->select("*", false);
-        $this->db->from("{$this->_tabel} a");
+        $this->db->from("{$this->_tabel}");
 
         $result = $this->db->get()->result();
-
-        foreach ($result as &$row) {
-            $row->action =  '
-                        <button 
-                            class="btn p-0 border-0 bg-transparent view-menu-access" 
-                            data-type="modal"
-                            data-fullscreenmodal="0"
-                            data-url="' . base_url("users/access_menu/{$row->id}") . '" 
-                            title="Menu Access">
-                            <span data-bs-toggle="tooltip" data-bs-trigger="hover" aria-label="Edit" data-bs-original-title="Menu" data-kt-initialized="1">
-                                <span class="svg-icon svg-icon-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#004578" class="bi bi-list-check" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 3.293l1.146-1.147a.5.5 0 0 1 .708 0m0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 7.293l1.146-1.147a.5.5 0 0 1 .708 0m0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"/>
-                                    </svg>
-                                </span>
-                            </span>
-                        </button>';
-
-            $row->action .= generateActionButtons($row->id, 'menu', [], $this->getCurrentMenuPermissions());
-        }
 
         return json_encode(['data' => $result]);
     }
@@ -67,10 +47,9 @@ class Users_model extends MY_Model
 
         $role_validate = ['trim', 'required', 'xss_clean'];
 
-        $this->form_validation->set_rules('username', 'Username', $role_validate);
+        $this->form_validation->set_rules('name', 'Name', $role_validate);
         $this->form_validation->set_rules('email', 'Email', $role_validate);
-        $this->form_validation->set_rules('password', 'Password', $role_validate);
-        $this->form_validation->set_rules('confirm_password', 'Confirm Password', $role_validate);
+        $this->form_validation->set_rules('pass', 'Password', $role_validate);
 
         $this->form_validation->set_error_delimiters('<div class="' . VALIDATION_MESSAGE_FORM . '">', '</div>');
 
