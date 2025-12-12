@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+
 ?>
 
 <div class="d-flex flex-column flex-column-fluid">
@@ -11,15 +12,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                     <div class="d-flex flex-wrap flex-sm-nowrap align-items-center gap-4 h-100">
 
-                        <!-- Avatar -->
-                        <div class="symbol symbol-100px symbol-sm-10px symbol-fixed position-relative">
+                        <div class="symbol symbol-60px symbol-sm-10px symbol-fixed position-relative">
                             <img src="<?= base_url('assets/metronic/media/avatars/300-27.jpg') ?>"
                                 alt="image"
                                 class="rounded-circle"
                                 style="object-fit: cover;">
                         </div>
 
-                        <!-- Text -->
                         <div class="flex-grow-1 d-flex align-items-center h-100">
                             <div class="d-flex flex-column justify-content-center">
 
@@ -65,7 +64,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             <div class="tab-content">
 
-                <div class="tab-pane fade show active" id="pill_detail" role="tabpanel">
+                <div class="tab-pane fade" id="pill_detail" role="tabpanel">
                     <div class="card">
                         <div class="card-body">
 
@@ -74,16 +73,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </h1>
 
                             <div class="d-flex flex-column scroll-y me-n7 pe-7">
-                                <input type="hidden" id="id" name="id" value="<?= $detail->id ?? '' ?>" />
+                                <input type="hidden" id="id" name="id" value="<?= $user_detail['id'] ?? '' ?>" />
 
                                 <div class="fv-row mb-7">
                                     <label class="required fw-semibold fs-6 ">Name</label>
-                                    <input type="text" id="name" name="name" class="form-control mb-3 mb-lg-0" value="<?= $detail->controller ?? '' ?>" data-type="input" autocomplete="off" />
+                                    <input type="text" id="name" name="name" class="form-control mb-3 mb-lg-0" value="<?= $user_detail['username'] ?? '' ?>" data-type="input" autocomplete="off" />
                                 </div>
 
                                 <div class="fv-row mb-7">
                                     <label class="required fw-semibold fs-6 ">Email</label>
-                                    <input type="text" id="email" name="email" class="form-control mb-3 mb-lg-0" value="<?= $detail->controller ?? '' ?>" data-type="input" autocomplete="off" />
+                                    <input type="text" id="email" name="email" class="form-control mb-3 mb-lg-0" value="<?= $user_detail['email'] ?? '' ?>" data-type="input" autocomplete="off" />
                                 </div>
 
                                 <div class="fv-row mb-7 position-relative">
@@ -100,7 +99,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                 <div class="fv-row mb-7">
                                     <label class="fw-semibold fs-6 ">Notes</label>
-                                    <textarea type="text" id="notes" name="notes" class="form-control mb-3 mb-lg-0" data-type="input" autocomplete="off" /></textarea>
+                                    <textarea type="text" id="notes" name="notes" class="form-control mb-3 mb-lg-0" data-type="input" autocomplete="off" />
+                                    <?= $user_detail['notes'] ?? '' ?>
+                                    </textarea>
                                 </div>
                             </div>
 
@@ -118,7 +119,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </div>
 
-                <div class="tab-pane fade" id="pill_permissions" role="tabpanel">
+                <div class="tab-pane fade show active" id="pill_permissions" role="tabpanel">
                     <div class="card">
                         <div class="card-body">
 
@@ -134,135 +135,43 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                             </div>
 
-                            <table class="table table-row-bordered align-middle gy-4 gs-9" style=" border: 1px solid #E4E6EF; ">
+                            <table class="custom-table table-row-bordered mb-6">
                                 <thead class="border-bottom border-gray-200 fs-6 fw-bold bg-light bg-opacity-100">
                                     <tr>
-                                        <td class="min-w-150px">Date</td>
-                                        <td class="min-w-250px">Description</td>
-                                        <td class="min-w-150px">Amount</td>
+                                        <td class="min-w-50px">Menu</td>
+                                        <td class="min-w-250px">Detail</td>
+                                        <td class="min-w-150px d-flex align-items-center gap-3">
+                                            <label class="form-check form-switch form-check-custom form-check-solid">
+                                                <input class="form-check-input" type="checkbox" value="enabled" checked>
+                                            </label>
+                                            <span>Role</span>
+                                        </td>
                                     </tr>
                                 </thead>
+
                                 <tbody class="fw-semibold text-gray-600">
 
-                                    <tr>
-                                        <td>Nov 01, 2020</td>
-                                        <td>
-                                            ksjksj
-                                        </td>
-                                        <td>$123.79</td>
-                                    </tr>
+                                    <?php
+                                    foreach (json_decode($list_access, true)['data'] as $res) {
+                                    ?>
+                                        <tr>
+                                            <td><?= $res['name'] ?></td>
+                                            <td>
+                                                <select class="form-select form-select-sm" data-control="select2" data-close-on-select="false" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple">
+                                                    <option></option>
+                                                    <option value="view">View</option>
+                                                    <option value="edit">Edit</option>
+                                                    <option value="delete">Delete</option>
+                                                    <option value="create">Create</option>
+                                                    <option value="export">Export</option>
+                                                    <option value="import">Import</option>
+                                                </select>
+                                            </td>
+                                            <td>$123.79</td>
+                                        </tr>
+                                    <?php
+                                    } ?>
 
-                                    <tr>
-                                        <td>Oct 08, 2020</td>
-                                        <td>
-                                            <select name="field_type[]" aria-label="Select Type" data-control="select2"
-                                                data-placeholder="Choose Table" class="form-select form-select-lg fw-semibold"
-                                                multiple>
-                                                <option value="text">Text</option>
-                                                <option value="textarea">Textarea</option>
-                                                <option value="number">Number</option>
-                                                <option value="date">Date</option>
-                                                <option value="select2">Select2</option>
-                                                <option value="checkbox">CheckBox</option>
-                                                <option value="radio">Radio</option>
-                                                <option value="file">File</option>
-                                                <option value="email">Email</option>
-                                                <option value="password">Password</option>
-                                            </select>
-
-                                        </td>
-                                        <td>
-                                            <select id="roleSelect" name="field_type[]" multiple data-control="select2" class="form-select form-select-lg fw-semibold">
-                                                <option value="view">View</option>
-                                                <option value="edit">Edit</option>
-                                                <option value="delete">Delete</option>
-                                                <option value="create">Create</option>
-                                                <option value="export">Export</option>
-                                                <option value="import">Import</option>
-                                            </select>
-
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Aug 24, 2020</td>
-                                        <td>Paypal</td>
-                                        <td>$35.07</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Jun 01, 2020</td>
-                                        <td>
-                                            <a href="#">Invoice for May 2023</a>
-                                        </td>
-                                        <td>$123.79</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                            <table class="table table-row-bordered align-middle gy-4 gs-9" style=" border: 1px solid #E4E6EF; ">
-                                <thead class="border-bottom border-gray-200 fs-6 fw-bold bg-light bg-opacity-100">
-                                    <tr>
-                                        <td class="min-w-150px">Date</td>
-                                        <td class="min-w-250px">Description</td>
-                                        <td class="min-w-150px">Amount</td>
-                                    </tr>
-                                </thead>
-                                <tbody class="fw-semibold text-gray-600">
-
-                                    <tr>
-                                        <td>Nov 01, 2020</td>
-                                        <td>
-                                            ksjksj
-                                        </td>
-                                        <td>$123.79</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Oct 08, 2020</td>
-                                        <td>
-                                            <select name="field_type[]" aria-label="Select Type" data-control="select2"
-                                                data-placeholder="Choose Field" class="form-select form-select-lg fw-semibold"
-                                                multiple>
-                                                <option value="text">Text</option>
-                                                <option value="textarea">Textarea</option>
-                                                <option value="number">Number</option>
-                                                <option value="date">Date</option>
-                                                <option value="select2">Select2</option>
-                                                <option value="checkbox">CheckBox</option>
-                                                <option value="radio">Radio</option>
-                                                <option value="file">File</option>
-                                                <option value="email">Email</option>
-                                                <option value="password">Password</option>
-                                            </select>
-
-                                        </td>
-                                        <td>
-                                            <select id="roleSelects" name="field_type[]" multiple data-control="select2" class="form-select form-select-lg fw-semibold">
-                                                <option value="view">View</option>
-                                                <option value="edit">Edit</option>
-                                                <option value="delete">Delete</option>
-                                                <option value="create">Create</option>
-                                                <option value="export">Export</option>
-                                                <option value="import">Import</option>
-                                            </select>
-
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Aug 24, 2020</td>
-                                        <td>Paypal</td>
-                                        <td>$35.07</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Jun 01, 2020</td>
-                                        <td>
-                                            <a href="#">Invoice for May 2023</a>
-                                        </td>
-                                        <td>$123.79</td>
-                                    </tr>
                                 </tbody>
                             </table>
 

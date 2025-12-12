@@ -23,6 +23,17 @@ class Users_model extends MY_Model
         return $users;
     }
 
+    public function findById($id)   
+    {
+        $users = $this->db->select('id,email,username,password')
+            ->from($this->_table_ms_users)
+            ->where('id', $id)
+            ->get()
+            ->row_array();
+
+        return $users;
+    }
+
     public function getProfil()
     {
         $get = $this->get(array('email' => $this->_session_email, 'remember_token' => $this->_session_id));

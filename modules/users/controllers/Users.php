@@ -15,7 +15,6 @@ class Users extends MY_Owner
 			'update_permission',
 			'data_menu',
 			'access_menu',
-			'showUserMenuById',
 			'process_access_menu',
 			'detail'
 		];
@@ -52,14 +51,6 @@ class Users extends MY_Owner
 		echo $this->users_model->show();
 	}
 
-	public function showUserMenuById($id)
-	{
-		isAjaxRequestWithPost();
-		$this->function_access('view');
-
-		echo $this->menu->getUserMenuById($id);
-	}
-
 	public function insert()
 	{
 		isAjaxRequestWithPost();
@@ -76,7 +67,7 @@ class Users extends MY_Owner
 		exit();
 	}
 
-	public function detail()
+	public function detail($id)
 	{
 		$this->template->title('Manage User');
 		$this->setTitlePage('Manage User');
@@ -84,7 +75,8 @@ class Users extends MY_Owner
 		$this->setJs('user_details');
 
 		$data = [
-			'roles_list' => $this->roles->show()
+			'user_detail' => $this->users_model->findById($id),
+			'list_access' => $this->menu->getUserMenuById($id)
 		];
 
 		$this->template->build('v_form_detail', $data);

@@ -51551,3 +51551,29 @@ html:not([data-theme="dark"]) {
     cursor: pointer;
     color: #888;
 }
+.custom-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #E4E6EF;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.custom-table thead {
+  background: #f8f9fa;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 12px;
+  border: none;
+}
+
+.custom-table tbody td {
+  border-bottom: 1px solid #E4E6EF;
+}
+
+.custom-table tbody tr:last-child td {
+  border-bottom: none;
+}
