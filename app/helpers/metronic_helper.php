@@ -166,7 +166,7 @@ function generateTableHtml($array = [], $tbody = [], $id = 'table-data')
 
 	$idTable = "id=\"{$id}\"";
 
-	$html = "<table class=\"fluent-table\" {$idTable}>";
+	$html = "<table class=\"custom-table\" {$idTable}>";
 
 	$html .= "<thead>";
 	$html .= '<tr>';

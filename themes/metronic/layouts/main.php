@@ -84,41 +84,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<!--end::Modal dialog-->
 	</div>
 
-	<div class="modal fade" id="modalLarge4" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<!--begin::Modal dialog-->
-		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-			<!--begin::Modal content-->
-			<div class="modal-content modal-rounded" style=" border: 2px solid #888;">
-
+	<div class="modal fade" id="modalRight" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-end modal-full-height modal-dialog-scrollable">
+			<div class="modal-content h-100 rounded-0" style="border: 3px solid #888;">
 			</div>
-			<!--end::Modal content-->
 		</div>
-		<!--end::Modal dialog-->
 	</div>
 
-	<div class="modal fade" id="modalLarge5" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<!--begin::Modal dialog-->
-		<div class="modal-dialog modal-dialog-centered mw-650px modal-dialog-scrollable ">
-			<!--begin::Modal content-->
-			<div class="modal-content modal-rounded" style=" border: 3px solid #888;">
-
-			</div>
-			<!--end::Modal content-->
-		</div>
-		<!--end::Modal dialog-->
-	</div>
-
-	<div class="modal fade" id="modalLarge6" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<!--begin::Modal dialog-->
-		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-			<!--begin::Modal content-->
-			<div class="modal-content modal-rounded">
-
-			</div>
-			<!--end::Modal content-->
-		</div>
-		<!--end::Modal dialog-->
-	</div>
 
 	<!--begin::Scrolltop-->
 	<div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">

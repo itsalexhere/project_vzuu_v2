@@ -70,14 +70,14 @@ if (!function_exists('generateActionButtons')) {
 
 if (!function_exists('searchActionButtons')) {
     function searchActionButtons()
-    {
+    {   
         $button = ' <div class="position-relative" style="max-width: 200px; width: 100%;">
                         <span class="position-absolute top-50 translate-middle-y ms-3">
                             <i class="bi bi-search"></i>
                         </span>
 
                         <input type="text" id="search_table-data" name="search_table-data"
-                            class="form-control" style="padding: 3px 30px !important;"
+                            class="form-control" style="padding: 3px 30px !important;height: 32px;"
                             placeholder="Search" autocomplete="off" />
                     </div>';
 
@@ -118,6 +118,103 @@ if (!function_exists('addButtonForm')) {
         </div>';
 
         return $button;
+    }
+}
+
+
+if (!function_exists('renderMenuByCategory')) {
+    function renderMenuByCategory($menu, $category = null)
+    {
+        foreach ($menu as $val) {
+
+            // filter category
+            $ctg = $val['category'] ?? '';
+            if ($category === null && $ctg !== '') continue;
+            if ($category !== null && $ctg !== $category) continue;
+
+            $controller = $val['controller'];
+            $menu_name = ucwords($val['name']);
+            $icon       = $val['icon'];
+            $active     = $val['active'] ?? '';
+            $children   = $val['child'] ?? [];
+
+            // cek active child
+            $hasActiveChild = false;
+            foreach ($children as $child) {
+                if (($child['active'] ?? '') === 'active') {
+                    $hasActiveChild = true;
+                    break;
+                }
+            }
+
+            // jika punya child
+            if (!empty($children)) {
+
+                echo '<div data-kt-menu-trigger="click" class="menu-item menu-accordion ' .
+                    (($active === 'active' || $hasActiveChild) ? 'here show' : '') . '">';
+
+                echo '
+                <span class="menu-link">
+                    <span class="menu-icon"><i class="' . $icon . ' fs-2"></i></span>
+                    <span class="menu-title">' . $menu_name . '</span>
+                    <span class="menu-arrow"></span>
+                </span>
+                <div class="menu-sub menu-sub-accordion">';
+
+                foreach ($children as $child) {
+                    echo '
+                    <div class="menu-item">
+                        <a class="menu-link ' . (($child['active'] ?? '') === 'active' ? 'active' : '') . '" 
+                           href="' . base_url($child['controller']) . '">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">' . ucwords($child['name']) . '</span>
+                        </a>
+                    </div>';
+                }
+
+                echo '</div></div>';
+            } else {
+
+                echo '
+                <div class="menu-item ' . ($active === 'active' ? 'here' : '') . '">
+                    <a class="menu-link ' . ($active === 'active' ? 'active' : '') . '" 
+                       href="' . base_url($controller) . '">
+                        <span class="menu-icon"><i class="' . $icon . ' fs-2"></i></span>
+                        <span class="menu-title">' . $menu_name . '</span>
+                    </a>
+                </div>';
+            }
+        }
+    }
+}
+
+if (!function_exists('getMenuCategories')) {
+    function getMenuCategories($menu)
+    {
+        $categories = [];
+
+        foreach ($menu as $val) {
+            if (!empty($val['category'])) {
+                $categories[$val['category']] = true;
+            }
+        }
+
+        return array_keys($categories);
+    }
+}
+
+if (!function_exists('renderMenuSection')) {
+    function renderMenuSection($title)
+    {
+        echo '
+            <div class="menu-item mt-6">
+                <a class="menu-link py-2" href="#">
+                    <span class="menu-title text-dark"><strong>' . $title . '</strong></span>
+                </a>
+            </div>
+        ';
     }
 }
 

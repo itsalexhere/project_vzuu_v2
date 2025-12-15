@@ -51518,31 +51518,6 @@ html:not([data-theme="dark"]) {
   padding-top: 0;
 }
 
-.fluent-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: rgba(255, 255, 255, 0.55);
-    backdrop-filter: blur(18px);
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.fluent-table thead th {
-    padding: 8px;
-    border-bottom: 1px solid #605e5c;
-    font-weight: 500;
-    font-size: 14px;
-}
-
-.fluent-table td {
-    padding: 8px;
-    border-bottom: 0.5px solid #E4E4E4;
-}
-
-.fluent-table tbody tr:last-child td {
-    border-bottom: none;
-}
-
 .icon-eye-custom{
     position: absolute;
     top: 60%;
@@ -51576,4 +51551,15 @@ html:not([data-theme="dark"]) {
 
 .custom-table tbody tr:last-child td {
   border-bottom: none;
+}
+
+.modal-full-height {
+    height: 100vh;
+    max-width: 350px;
+    margin: 0;
+}
+
+.modal-dialog-end {
+    margin-left: auto;
+    margin-right: 0;
 }

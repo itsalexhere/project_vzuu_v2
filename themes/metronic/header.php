@@ -59,63 +59,47 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<img alt="logo" src="<?= MEDIA ?>/avatars/300-27.jpg" class="h-35px me-2 symbol symbol-circle" />
 
 							<div class="company-text d-flex flex-column justify-content-center">
-								<strong class="fs-6">Alex</strong>
+								<strong class="fs-6 d-flex align-items-center gap-3">
+									Alex
+									<span>
+										<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+											<path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+										</svg>
+									</span>
+								</strong>
 							</div>
 						</div>
 
 					</div>
 
-					<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px" data-kt-menu="true">
-						<!--begin::Menu item-->
-						<div class="menu-item px-3">
-							<div class="menu-content d-flex align-items-center px-3">
-								<!--begin::Avatar-->
-								<div class="symbol symbol-50px me-5">
-									<img alt="Logo" src="<?= MEDIA ?>/avatars/300-27.jpg" />
-								</div>
-								<!--end::Avatar-->
-								<!--begin::Username-->
-								<div class="d-flex flex-column">
-									<div class="fw-bold d-flex align-items-center fs-5 fullname">
-										<div class="d-flex flex-column">
-											<div class="d-flex align-items-center">
-												<a href="javascript:void()" class="text-gray-900 text-hover-primary fs-5 fw-bold me-1">Alex</a>
-												<a href="javascript:void()">
-													<span class="svg-icon svg-icon-1 svg-icon-info">
-														<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
-															<path d="M10.0813 3.7242C10.8849 2.16438 13.1151 2.16438 13.9187 3.7242V3.7242C14.4016 4.66147 15.4909 5.1127 16.4951 4.79139V4.79139C18.1663 4.25668 19.7433 5.83365 19.2086 7.50485V7.50485C18.8873 8.50905 19.3385 9.59842 20.2758 10.0813V10.0813C21.8356 10.8849 21.8356 13.1151 20.2758 13.9187V13.9187C19.3385 14.4016 18.8873 15.491 19.2086 16.4951V16.4951C19.7433 18.1663 18.1663 19.7433 16.4951 19.2086V19.2086C15.491 18.8873 14.4016 19.3385 13.9187 20.2758V20.2758C13.1151 21.8356 10.8849 21.8356 10.0813 20.2758V20.2758C9.59842 19.3385 8.50905 18.8873 7.50485 19.2086V19.2086C5.83365 19.7433 4.25668 18.1663 4.79139 16.4951V16.4951C5.1127 15.491 4.66147 14.4016 3.7242 13.9187V13.9187C2.16438 13.1151 2.16438 10.8849 3.7242 10.0813V10.0813C4.66147 9.59842 5.1127 8.50905 4.79139 7.50485V7.50485C4.25668 5.83365 5.83365 4.25668 7.50485 4.79139V4.79139C8.50905 5.1127 9.59842 4.66147 10.0813 3.7242V3.7242Z" fill="currentColor"></path>
-															<path d="M14.8563 9.1903C15.0606 8.94984 15.3771 8.9385 15.6175 9.14289C15.858 9.34728 15.8229 9.66433 15.6185 9.9048L11.863 14.6558C11.6554 14.9001 11.2876 14.9258 11.048 14.7128L8.47656 12.4271C8.24068 12.2174 8.21944 11.8563 8.42911 11.6204C8.63877 11.3845 8.99996 11.3633 9.23583 11.5729L11.3706 13.4705L14.8563 9.1903Z" fill="white"></path>
-														</svg>
-													</span>
-												</a>
-											</div>
-										</div>
-									</div>
-									<a class="fw-semibold text-muted text-hover-primary fs-7 email_account">Jakarta</a>
-								</div>
-								<!--end::Username-->
-							</div>
-						</div>
-						<!--end::Menu item-->
-						<!--begin::Menu separator-->
-						<div class="separator my-2"></div>
-						<!--end::Menu separator-->
+					<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-1 fs-6 w-275px" data-kt-menu="true">
 
-						<!--begin::Menu item-->
-						<div class="menu-item px-5 my-1">
-							<a data-type="modal" id="btnAccount" data-fullscreenmodal="0" data-url="<?= $account_setting ?>" class="menu-link px-5">Account Settings</a>
+						<div class="menu-item my-1">
+							<a data-type="modal" id="btnAccount" data-fullscreenmodal="0" data-url="<?= $account_setting ?>" class="menu-link d-flex align-items-center gap-3">
+								<span>
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+										<path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
+									</svg>
+								</span>
+								Account Settings
+							</a>
 						</div>
-						<!--end::Menu item-->
-						<!--begin::Menu item-->
-						<div class="menu-item px-5">
-							<a href="<?= $logout_url ?>" class="menu-link px-5">Sign Out</a>
+
+						<div class="menu-item">
+							<a href="<?= $logout_url ?>" class="menu-link d-flex align-items-center gap-3">
+								<span>
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
+										<path fill-rule="evenodd" d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0z" />
+										<path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708z" />
+									</svg>
+								</span>
+								Sign Out
+							</a>
 						</div>
-						<!--end::Menu item-->
+
 					</div>
 				</div>
-				<!--end::User menu-->
 			</div>
-			<!--end::Navbar-->
 		</div>
 	</div>
 </div>

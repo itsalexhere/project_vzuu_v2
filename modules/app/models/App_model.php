@@ -61,21 +61,22 @@ class App_model extends MY_Model
 
     public function get_menu($email, $remember_token, $method = 'all')
     {
-        $this->db->select(" m.id AS menu_id,
-                        m.controller,
-                        m.name,
-                        m.icon,
-                        m.parent,
-                        p.name AS parent_name,
-                        p.icon AS parent_icon,
-                        m.order,
-                        a.view,
-                        a.insert,
-                        a.update,
-                        a.delete,
-                        a.import,
-                        a.export
-                    ", FALSE);
+        $this->db->select("     m.id AS menu_id,
+                                m.controller,
+                                m.name,
+                                m.icon,
+                                m.category,
+                                m.parent,
+                                p.name AS parent_name,
+                                p.icon AS parent_icon,
+                                m.order,
+                                a.view,
+                                a.insert,
+                                a.update,
+                                a.delete,
+                                a.import,
+                                a.export
+                            ", FALSE);
 
         $this->db->from($this->_table_ms_users . " u");
         $this->db->join($this->_table_ms_user_accesscontrols . " a", "a.ms_user_id = u.id", "inner");

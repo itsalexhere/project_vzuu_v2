@@ -12,8 +12,7 @@ abstract class MY_Template extends MX_Controller
 
 	protected $_v_show = THEME . '/layouts/v_show';
 	protected $_v_form_modal = THEME . '/layouts/v_form_modal';
-	protected $_v_form_modal_custom = THEME . '/layouts/v_form_modal_custom';
-	protected $_v_form_custom = THEME . '/layouts/v_form_custom';
+	protected $_v_form_side = THEME . '/layouts/v_form_side';
 	protected $_v_form_profile = THEME . '/layouts/v_form_profile';
 	protected $_v_modal = THEME . '/layouts/v_modal';
 	protected $_v_integration = THEME . '/layouts/v_integration';
