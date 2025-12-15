@@ -29,7 +29,7 @@ function disabledButton(selector) {
 function loadingButton(selector) {
   disabledButton(selector);
   selector.html(
-    '<span class="indicator-label">Menunggu...<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>'
+    '<span class="indicator-label">Waiting...<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>'
   );
 }
 

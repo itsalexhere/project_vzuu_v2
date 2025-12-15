@@ -13,6 +13,7 @@ class Dashboard extends MY_Owner
     {
         $this->template->title('Dashboard');
         $this->setTitlePage('Dashboard');
+        $this->setJs("dashboard");
 
         $this->template->build('v_dashboard');
     }
