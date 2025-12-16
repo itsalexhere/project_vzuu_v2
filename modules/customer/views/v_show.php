@@ -34,17 +34,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="d-flex justify-content-between align-items-center mb-3">
 
                         <div class="d-flex align-items-start gap-2 gap-lg-3">
-                            <?= searchActionButtons() ?>
-
-                            <button class="btn btn-success btn-sm fw-bold" type="button" id="btnSide"
-                                data-type="modal"
-                                data-url="<?= base_url("customer/side") ?>"
-                                data-fullscreenmodal="' . $fullscreen . '">
-                                <i class="fa-solid fa-filter fs-4 me-2"></i>
-                                Filter
-                            </button>
+                            <?php
+                            echo  searchActionButtons();
+                            echo $c_button;
+                            ?>
                         </div>
-
 
                         <?= addButtonForm('customer/insert', 'Add ' . $titlePage, 0, $accessButton['insert'] ?? 0) ?>
                     </div>

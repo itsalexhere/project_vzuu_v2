@@ -2,13 +2,16 @@
 
 abstract class MY_Template extends MX_Controller
 {
-
 	protected $_css;
 	protected $_js;
 	protected $_breadcrumb = '';
 	protected $_custom_button_header = [];
 	protected $_custom_button_on_table = [];
 	protected $_logout_url = '';
+	protected $_grid_menu = '';
+	protected $_fullname_users = '';
+	protected $_account_url = '';
+	protected $_setting_profile = '';
 
 	protected $_v_show = THEME . '/layouts/v_show';
 	protected $_v_form_modal = THEME . '/layouts/v_form_modal';
@@ -17,12 +20,9 @@ abstract class MY_Template extends MX_Controller
 	protected $_v_modal = THEME . '/layouts/v_modal';
 	protected $_v_integration = THEME . '/layouts/v_integration';
 	protected $_v_form_permission = THEME . '/layouts/v_form_permission';
-	protected $_grid_menu = '';
-	protected $_fullname_users = '';
-	protected $_account_url = '';
 	protected $_v_modal_notButton = THEME . '/layouts/v_modal_notbutton';
-	protected $_setting_profile = '';
-
+	protected $_v_components= THEME . '/components/';
+	
 
 	public function __construct()
 	{

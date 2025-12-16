@@ -6,8 +6,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="app-container container-fluid">
             <button class="btn btn-success btn-sm fw-bold mb-6" type="button" id="btnSide"
                 data-type="modal"
-                data-url="<?= base_url("customer/side") ?>"
-                data-fullscreenmodal="' . $fullscreen . '">
+                data-url="<?= base_url("customer/side") ?>">
                 <i class="fa-solid fa-filter fs-4 me-2"></i>
                 Filter
             </button>
