@@ -25,7 +25,7 @@ class Customer extends MY_Owner
         $data=[
             'tables' => generateTableHtml($header_table),
             'accessButton' => $this->getCurrentMenuPermissions(),
-            'c_button' => $this->load->view($this->_v_components . 'buttons/filter', ['url' => 'customer/side'], true)
+            'c_topFields' => $this->load->view($this->_v_components . 'topFields', ['url' => 'customer/side'], true)
         ];
 
         $this->template->build('v_show', $data);

@@ -31,18 +31,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             <div class="card mt-6">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-
-                        <div class="d-flex align-items-start gap-2 gap-lg-3">
-                            <?php
-                            echo  searchActionButtons();
-                            echo $c_button;
-                            ?>
-                        </div>
-
-                        <?= addButtonForm('customer/insert', 'Add ' . $titlePage, 0, $accessButton['insert'] ?? 0) ?>
-                    </div>
-
+                    <?= $c_topFields?>
                     <?= $tables ?>
                 </div>
             </div>
