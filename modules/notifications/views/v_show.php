@@ -6,7 +6,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <div id="kt_app_content" class="app-content flex-column-fluid">
         <div id="kt_app_content_container" class="app-container container-fluid">
 
-            <ul class="nav nav-pills mb-5 fs-5 fw-bold mt-6" role="tablist">
+            <ul class="nav nav-pills mb-5 fs-5 fw-bold" role="tablist">
 
                 <li class="nav-item me-3" role="presentation">
                     <button class="nav-link active"

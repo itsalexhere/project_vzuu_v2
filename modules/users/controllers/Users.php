@@ -3,6 +3,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Users extends MY_Owner
 {
+
+	protected $title;
+	protected $path;
+	private $access;
+
 	public function __construct()
 	{
 		$this->_function_except = [
@@ -20,27 +25,40 @@ class Users extends MY_Owner
 		];
 
 		parent::__construct();
-
 		$this->load->model([
 			'roles/Roles_model'            => 'roles',
 			'menu/Menu_model'            => 'menu',
 			'user_access/User_access_model' => 'access_control'
 		]);
+		$this->path = "users";
+		$this->title = "Manage ".ucfirst($this->path);
+		$this->access = $this->getCurrentMenuPermissions();
 	}
 
 	public function index()
 	{
-		$this->template->title('Manage User');
-		$this->setTitlePage('Manage User');
-		$this->setParent('Master');
+		$this->template->title(ucfirst($this->title));
 		$this->assetsBuild(['datatables']);
-		$this->setJs('users');
+		$this->setJs("users");
 
-		$header_table = array('User ID','name', 'email','status', 'joined date', "last active");
+		$headerTable = array('User ID','name', 'email','status', 'joined date', "last active");
 
-		$data['tables'] = generateTableHtml($header_table);
+		$data = [
+			'tables' => generateTableHtml($headerTable),
+			'c_views_header' => $this->load->view($this->_v_components . 'views/v_header', [
+				'titlePage' => $this->title,
+				'parentMenu' => "Master"
+			], true),
+			'c_input_search' => $this->load->view($this->_v_components . 'input/search', "", true),
+			'c_btn_filter' => $this->load->view($this->_v_components . 'buttons/filter', ["url" => $this->path . "/side"], true),
+			'c_btn_add' => $this->access['insert'] ? $this->load->view($this->_v_components . 'buttons/add', 
+							[
+								"url" => $this->path . "/insert",
+								"label" => "Add Users"
+							], true) : ''
+		];
 
-		$this->template->build('v_show', $data);
+		$this->template->build('v_show', ['c_show' => $this->load->view($this->_v_components . 'views/v_show', $data, true)]);
 	}
 
 	public function show()

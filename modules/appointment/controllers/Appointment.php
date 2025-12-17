@@ -4,31 +4,54 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Appointment extends MY_Owner
 {
     protected $title;
+    protected $path;
+    private $access;
 
     public function __construct()
     {
         $this->_function_except = ['show','process', 'side'];
         parent::__construct();
         $this->title = "Appointment";
+        $this->path = "appointment";
+        $this->access = $this->getCurrentMenuPermissions();
     }
 
     public function index()
     {
         $this->template->title(ucfirst($this->title));
-        $this->setTitlePage(ucfirst($this->title));
-        $this->setParent('Master');
         $this->assetsBuild(['datatables']);
-        $this->setJs("customer");
+        $this->setJs("appointment");
 
-        $header_table = ['no', 'Name', 'Phone', 'Gender', 'Category', 'Date Of Birth', 'Email', 'Address', 'Allergies', 'Blood_type', 'Emergency Contact', 'Skin Type', 'Favorite Treatments', 'Note', 'Action'];
-
-        $data=[
-            'tables' => generateTableHtml($header_table),
-            'accessButton' => $this->getCurrentMenuPermissions(),
-            'c_topFields' => $this->load->view($this->_v_components . 'topFields', ['url' => 'customer/side'], true)
+        $headerTable = [
+            'no',
+            'Name',
+            'Phone',
+            'Gender',
+            'Category',
+            'Date Of Birth',
+            'Email',
+            'Address',
+            'Allergies',
+            'Blood Type',
+            'Emergency Contact',
+            'Skin Type',
+            'Favorite Treatments',
+            'Note',
+            'Action'
         ];
 
-        $this->template->build('v_show', $data);
+        $data=[
+            'tables' => generateTableHtml($headerTable),
+            'c_views_header' => $this->load->view($this->_v_components . 'views/v_header', [
+                'titlePage' => ucfirst($this->title),
+                'parentMenu' => "Master"
+            ], true),
+            'c_input_search' => $this->load->view($this->_v_components . 'input/search', "", true),
+            'c_btn_filter' => $this->load->view($this->_v_components . 'buttons/filter', ["url"=> $this->path."/side"], true),
+            'c_btn_add' => $this->access['insert'] ? $this->load->view($this->_v_components . 'buttons/add', ["url" => $this->path . "/insert"], true):''
+        ];
+
+        $this->template->build('v_show', ['c_show' => $this->load->view($this->_v_components . 'views/v_show', $data, true)]);
     }
 
     public function show()

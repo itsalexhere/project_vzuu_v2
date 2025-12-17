@@ -14,13 +14,13 @@ abstract class MY_Template extends MX_Controller
 	protected $_setting_profile = '';
 
 	protected $_v_show = THEME . '/layouts/v_show';
-	protected $_v_form_modal = THEME . '/layouts/v_form_modal';
-	protected $_v_form_side = THEME . '/layouts/v_form_side';
-	protected $_v_form_profile = THEME . '/layouts/v_form_profile';
-	protected $_v_modal = THEME . '/layouts/v_modal';
-	protected $_v_integration = THEME . '/layouts/v_integration';
-	protected $_v_form_permission = THEME . '/layouts/v_form_permission';
-	protected $_v_modal_notButton = THEME . '/layouts/v_modal_notbutton';
+	protected $_v_form_modal = THEME . '/' . PATH_THEME_FORMS . '/v_form_modal';
+	protected $_v_form_side = THEME .'/'. PATH_THEME_FORMS. '/v_form_side';
+	protected $_v_form_profile = THEME . '/' . PATH_THEME_FORMS . '/v_form_profile';
+	protected $_v_modal = THEME . '/' . PATH_THEME_FORMS . '/v_modal';
+	protected $_v_integration = THEME . '/' . PATH_THEME_FORMS . '/v_integration';
+	protected $_v_form_permission = THEME . '/' . PATH_THEME_FORMS . '/v_form_permission';
+	protected $_v_modal_notButton = THEME . '/' . PATH_THEME_FORMS . '/v_modal_notbutton';
 	protected $_v_components= THEME . '/components/';
 	
 

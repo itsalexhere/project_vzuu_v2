@@ -60,12 +60,14 @@ defined('EXIT_DATABASE')       or define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      or define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      or define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
-define('THEME', 'metronic'); // for theme
-define('LAYOUT', 'main'); //for layout/main.php
-define('HEADER', 'header');
-define('SIDEBAR', 'sidebar');
-define('BREADCRUMB', 'breadcrumb');
-define('FOOTER', 'footer');
+define('THEME', 'metronic');
+define('PATH_THEME_PARTIAL', 'partials/');
+define('PATH_THEME_FORMS', 'components/forms');
+define('LAYOUT', 'main'); 
+define('HEADER', PATH_THEME_PARTIAL.'header');
+define('SIDEBAR', PATH_THEME_PARTIAL.'sidebar');
+define('BREADCRUMB', PATH_THEME_PARTIAL.'breadcrumb');
+define('FOOTER', PATH_THEME_PARTIAL.'footer');
 define('SEARCH_UI', 'search-ui');
 define('ASSETS', 'assets/' . THEME);
 define('ASSETSGENERAL', 'assets');

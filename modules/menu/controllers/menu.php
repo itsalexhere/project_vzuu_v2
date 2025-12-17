@@ -4,28 +4,44 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Menu extends MY_Owner
 {
 	protected $title;
+	protected $path;
+	private $access;
 
 	public function __construct()
 	{
 		$this->_function_except = ['show', 'process', 'status', 'paging', 'insert_group', 'orders'];
 		parent::__construct();
-		$this->title = 'menu';
+		$this->path = "menu";
+		$this->title = ucfirst($this->path);
+		$this->access = $this->getCurrentMenuPermissions();
 	}
 
 	public function Index()
 	{
 		$this->template->title(ucfirst($this->title));
-		$this->setTitlePage(ucfirst($this->title));
-		$this->setParent('Master');
-		$this->assetsBuild(['datatables', 'sortable']);
-		$this->setJs($this->title);
+		$this->assetsBuild(['datatables']);
+		$this->setJs($this->path);
 
-		$header_table = ['no', 'nama', 'controller', 'parent', 'order', 'status', 'action'];
+		$headerTable = ['no', 'nama', 'controller', 'parent', 'order', 'status', 'action'];
 
-		$data['tables'] = generateTableHtml($header_table);
-		$data['accessButton'] = $this->getCurrentMenuPermissions();
+		$data = [
+			'tables' => generateTableHtml($headerTable),
+			'c_views_header' => $this->load->view($this->_v_components . 'views/v_header', [
+				'titlePage' => $this->title,
+				'parentMenu' => "Master"
+			], true),
+			'c_input_search' => $this->load->view($this->_v_components . 'input/search', "", true),
+			'c_btn_add' => $this->access['insert'] ? $this->load->view(
+				$this->_v_components . 'buttons/add',
+				[
+					"url" => $this->path . "/insert", 
+					"label" => "Add " . $this->title
+				],
+				true
+			) : ''
+		];
 
-		$this->template->build('v_show', $data);
+		$this->template->build('v_show', ['c_show' => $this->load->view($this->_v_components . 'views/v_show', $data, true)]);
 	}
 
 	public function show()

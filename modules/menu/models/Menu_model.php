@@ -123,6 +123,15 @@ class Menu_model extends MY_Model
 
         $result = $this->db->get()->result();
 
+        // $btnEdit = $this->load->view(
+        //     $this->_v_components . 'buttons/add',
+        //     [
+        //         "url" => $this->path . "/insert",
+        //         "label" => "Add " . $this->title
+        //     ],
+        //     true
+        // );
+
         foreach ($result as &$row) {
             $row->action = generateActionButtons($row->id, 'menu', [], $this->getCurrentMenuPermissions());
         }
