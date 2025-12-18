@@ -123,27 +123,6 @@ function mkautononew($table, $field, $prefix)
 	return $generateCode;
 }
 
-
-
-if (!function_exists('mkautono')) {
-	function mkautono($table, $field, $prefix)
-	{
-		$code = get_max_code($table, $field);
-		$_trans = date("Ymd");
-
-		if (!empty($code->code)) {
-			$noUrut = (int) substr($code->code, -5);
-		} else {
-			$noUrut = 0;
-		}
-
-		$noUrut++;
-		$generateCode = $prefix . '/' . $_trans . '/' . sprintf("%05s", $noUrut);
-
-		return $generateCode;
-	}
-}
-
 if (!function_exists('generatenisauto')) {
 	function generatenisauto($table, $field, $prefix)
 	{

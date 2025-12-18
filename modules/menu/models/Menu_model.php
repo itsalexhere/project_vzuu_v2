@@ -122,18 +122,36 @@ class Menu_model extends MY_Model
         $this->db->order_by('a.name', 'ASC');
 
         $result = $this->db->get()->result();
-
-        // $btnEdit = $this->load->view(
-        //     $this->_v_components . 'buttons/add',
-        //     [
-        //         "url" => $this->path . "/insert",
-        //         "label" => "Add " . $this->title
-        //     ],
-        //     true
-        // );
+        $access = $this->getCurrentMenuPermissions();
 
         foreach ($result as &$row) {
-            $row->action = generateActionButtons($row->id, 'menu', [], $this->getCurrentMenuPermissions());
+            $buttons = '';
+
+            if (($access['update'] ?? 0) == 1) {
+                $buttons .= $this->load->view(
+                    PATH_COMPONENTS .'buttons/edit',
+                    [
+                        'id'    => $row->id,
+                        'url'   => base_url("menu/update/{$row->id}"),
+                        'title' => 'Edit Menu'
+                    ],
+                    true
+                );
+            }
+
+            if (($access['delete'] ?? 0) == 1) {
+                $buttons .= $this->load->view(
+                    PATH_COMPONENTS .'buttons/delete',
+                    [
+                        'id'           => $row->id,
+                        'url'          => base_url("menu/delete/{$row->id}"),
+                        'confirm_text' => 'Data Akan Dihapus ?'
+                    ],
+                    true
+                );
+            }
+
+            $row->action = $buttons;
         }
 
         return json_encode(['data' => $result]);

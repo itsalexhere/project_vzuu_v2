@@ -10,7 +10,5 @@ defined('BASEPATH') or exit('No direct script access allowed');
     data-url="<?= $url ?? "" ?>"
     data-id="<?= $id ?? "" ?>"
     title="Edit">
-    <span class="svg-icon svg-icon-3">
-        <i class="bi bi-pencil fs-4 me-2"></i>
-    </span>
+    <i class="bi bi-pencil fs-4 me-2" style="color:#217346"></i>
 </button>

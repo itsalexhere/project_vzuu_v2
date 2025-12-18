@@ -21,8 +21,6 @@ abstract class MY_Template extends MX_Controller
 	protected $_v_integration = THEME . '/' . PATH_THEME_FORMS . '/v_integration';
 	protected $_v_form_permission = THEME . '/' . PATH_THEME_FORMS . '/v_form_permission';
 	protected $_v_modal_notButton = THEME . '/' . PATH_THEME_FORMS . '/v_modal_notbutton';
-	protected $_v_components= THEME . '/components/';
-	
 
 	public function __construct()
 	{

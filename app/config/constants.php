@@ -63,6 +63,7 @@ defined('EXIT__AUTO_MAX')      or define('EXIT__AUTO_MAX', 125); // highest auto
 define('THEME', 'metronic');
 define('PATH_THEME_PARTIAL', 'partials/');
 define('PATH_THEME_FORMS', 'components/forms');
+define('PATH_COMPONENTS', THEME . '/components/');
 define('LAYOUT', 'main'); 
 define('HEADER', PATH_THEME_PARTIAL.'header');
 define('SIDEBAR', PATH_THEME_PARTIAL.'sidebar');

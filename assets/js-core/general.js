@@ -197,9 +197,11 @@ function gridDatatables(
       columns: column,
       paging: paging,
       pageLength: defaultLength,
+      lengthChange: false,
       searching: false,
       info: false,
-      dom: '<"top"f>rt<"bottom">',
+      ordering: true,
+      dom: 'rt',
       columnDefs: [{ targets: "_all", orderable: true }],
       order: [],
 
@@ -212,10 +214,17 @@ function gridDatatables(
       initComplete: function () {
         if (paging) {
           createCustomPagination(tbl);
+          updateInfoText(tbl);
+          bindLengthChange(tbl);
         } else {
           $("#custom-pagination").hide();
         }
       },
+    });
+
+    tbl.on("draw", function () {
+      createCustomPagination(tbl);
+      updateInfoText(tbl);
     });
 
     return tbl;
@@ -225,51 +234,77 @@ function gridDatatables(
   }
 }
 
-function createCustomPagination(table) {
-  const pageLength = table.page.len();
-  const totalRecords = table.data().count();
-  const totalPages = Math.ceil(totalRecords / pageLength);
+function updateInfoText(table) {
+  const info = table.page.info();
 
+  const from  = info.start + 1;
+  const to    = info.end;
+  const total = info.recordsTotal;
+
+  $("#dt-info").text(`${from}–${to} of ${total} items`);
+}
+
+$("#dt-length").on("change", function () {
+  table.page.len(parseInt(this.value)).draw();
+});
+
+function bindLengthChange(table) {
+  $("#dt-length")
+    .off("change")
+    .on("change", function () {
+      const length = parseInt(this.value, 10);
+      table.page.len(length).draw();
+    });
+}
+
+function createCustomPagination(table) {
+  const info = table.page.info();
   const $pagination = $("#custom-pagination");
+
   $pagination.empty();
 
-  // Previous button
+  // Prev
   $pagination.append(`
-        <li class="page-item previous disabled">
-            <a href="#" class="page-link"><i class="previous"></i></a>
-        </li>
-    `);
+    <li class="page-item ${info.page === 0 ? "disabled" : ""}">
+      <a href="#" class="page-link" data-page="prev">‹</a>
+    </li>
+  `);
 
   // Page numbers
-  for (let i = 1; i <= totalPages; i++) {
+  for (let i = 0; i < info.pages; i++) {
     $pagination.append(`
-            <li class="page-item ${i === 1 ? "active" : ""}">
-                <a href="#" class="page-link" data-page="${i - 1}">${i}</a>
-            </li>
-        `);
+      <li class="page-item ${i === info.page ? "active" : ""}">
+        <a href="#" class="page-link" data-page="${i}">${i + 1}</a>
+      </li>
+    `);
   }
 
-  // Next button
+  // Next
   $pagination.append(`
-        <li class="page-item next">
-            <a href="#" class="page-link"><i class="next"></i></a>
-        </li>
-    `);
+    <li class="page-item ${info.page === info.pages - 1 ? "disabled" : ""}">
+      <a href="#" class="page-link" data-page="next">›</a>
+    </li>
+  `);
 
-  // Click event
-  $pagination.on("click", "a.page-link", function (e) {
+  // Click handler
+  $pagination.off("click").on("click", "a.page-link", function (e) {
     e.preventDefault();
 
     const page = $(this).data("page");
-    if (page !== undefined) {
-      table.page(page).draw(false);
 
-      // update active state
-      $pagination.find("li").removeClass("active");
-      $(this).parent().addClass("active");
+    if (page === "prev") {
+      table.page("previous").draw("page");
+    } else if (page === "next") {
+      table.page("next").draw("page");
+    } else {
+      table.page(parseInt(page)).draw("page");
     }
+
+    // refresh pagination state
+    createCustomPagination(table);
   });
 }
+
 
 function buttonAction(button, modal = null) {
   const url = button.data("url");

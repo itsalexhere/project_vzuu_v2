@@ -8,8 +8,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     data-title="<?= $message ?? "Deleted Data" ?>"
     data-url="<?= $url ?? "" ?>"
     data-id="<?= $id ?>"
-    data-title="Hapus">
-    <span class="svg-icon svg-icon-3">
-        <i class="bi bi-trash fs-4 me-2"></i>
-    </span>
+    data-title="Delete" 
+    title="Delete">
+    <i class="bi bi-trash fs-4 me-2" style="color:#a4373a;"></i>
 </button>

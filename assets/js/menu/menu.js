@@ -25,7 +25,7 @@ $(document).ready(function () {
     { data: "action", width: "17%" },
   ];
 
-  const setTables = gridDatatables(url, columns, false);
+  const setTables = gridDatatables(url, columns);
 
   makeTableSortable("#table-data", base_url() + "menu/orders", setTables);
 });

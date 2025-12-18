@@ -19,20 +19,24 @@ class Menu extends MY_Owner
 	public function Index()
 	{
 		$this->template->title(ucfirst($this->title));
-		$this->assetsBuild(['datatables']);
+		$this->assetsBuild(['datatables','sortable']);
 		$this->setJs($this->path);
 
-		$headerTable = ['no', 'nama', 'controller', 'parent', 'order', 'status', 'action'];
-
 		$data = [
-			'tables' => generateTableHtml($headerTable),
-			'c_views_header' => $this->load->view($this->_v_components . 'views/v_header', [
+			'tables' => $this->load->view(PATH_COMPONENTS .'tables/v_table_round',
+				[
+					'id'      => 'table-data',
+					'columns' => ['no', 'nama', 'controller', 'parent', 'order', 'status', 'action'],
+				],
+				true
+			),
+			'c_views_header' => $this->load->view(PATH_COMPONENTS . 'views/v_header', [
 				'titlePage' => $this->title,
 				'parentMenu' => "Master"
 			], true),
-			'c_input_search' => $this->load->view($this->_v_components . 'input/search', "", true),
+			'c_input_search' => $this->load->view(PATH_COMPONENTS . 'input/search', "", true),
 			'c_btn_add' => $this->access['insert'] ? $this->load->view(
-				$this->_v_components . 'buttons/add',
+				PATH_COMPONENTS . 'buttons/add',
 				[
 					"url" => $this->path . "/insert", 
 					"label" => "Add " . $this->title
@@ -41,7 +45,7 @@ class Menu extends MY_Owner
 			) : ''
 		];
 
-		$this->template->build('v_show', ['c_show' => $this->load->view($this->_v_components . 'views/v_show', $data, true)]);
+		$this->template->build('v_show', ['c_show' => $this->load->view(PATH_COMPONENTS . 'views/v_show', $data, true)]);
 	}
 
 	public function show()
