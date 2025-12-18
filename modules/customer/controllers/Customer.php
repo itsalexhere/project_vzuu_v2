@@ -22,26 +22,30 @@ class Customer extends MY_Owner
         $this->assetsBuild(['datatables']);
         $this->setJs($this->path);
 
-        $headerTable = [
-            'no',
-            'Name',
-            'Phone',
-            'Gender',
-            'Category',
-            'Date Of Birth',
-            'Email',
-            'Address',
-            'Allergies',
-            'Blood Type',
-            'Emergency Contact',
-            'Skin Type',
-            'Favorite Treatments',
-            'Note',
-            'Action'
-        ];
-
         $data=[
-            'tables' => generateTableHtml($headerTable),
+            'tables' => $this->load->view(
+                PATH_COMPONENTS . 'tables/v_table_round',
+                [
+                    'id'      => 'table-data',
+                    'columns' => [
+                        'Customer ID',
+                        'Name',
+                        'Phone',
+                        'Gender',
+                        'Category',
+                        'Date Of Birth',
+                        'Email',
+                        'Address',
+                        'Allergies',
+                        'Blood Type',
+                        'Emergency Contact',
+                        'Skin Type',
+                        'Favorite Treatments',
+                        'Note'
+                    ],
+                ],
+                true
+            ),
             'c_views_header' => $this->load->view(PATH_COMPONENTS . 'views/v_header', [
                 'titlePage' => $this->title,
                 'parentMenu' => "Master"
@@ -91,23 +95,28 @@ class Customer extends MY_Owner
 
     public function update($id)
     {
-        isAjaxRequestWithPost();
-
-        $set_data = [
-            'detail' => $this->customer_model->detail($id),
-            'form_fields_html' => $this->customer_model->list_fields(),
-        ];
+        $this->template->title('Manage User');
+        $this->setTitlePage('Manage User');
+        $this->setParent('Master');
+        $this->setJs('user_details');
 
         $data = [
-            'title_modal' => 'Edit ' . ucfirst($this->title),
-            'url_form' => base_url() . "customer/process",
-            'form' => $this->load->view('v_form', $set_data, true),
+            'table_doc' => $this->load->view(
+                PATH_COMPONENTS . 'tables/v_table_round',
+                [
+                    'id'      => 'table-data',
+                    'columns' => [
+                        'Document Name',
+                        'Upload',
+                        ''
+                    ],
+                ],
+                true
+            ),
+            'details' => $this->customer_model->detail($id)
         ];
 
-        $html = $this->load->view($this->_v_form_modal, $data, true);
-
-        echo json_encode(['html' => $html]);
-        exit();
+        $this->template->build('v_form_detail', $data);
     }
 
     public function process()

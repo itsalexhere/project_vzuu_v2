@@ -9,7 +9,20 @@ $(document).ready(function () {
                 return meta.row + meta.settings._iDisplayStart + 1;
             },
         },
-        { data: "name" },
+        {data: "name",
+          render: function (data, type, row) {
+            const urlpath =base_url() + `customer/update/${row.id}`;
+
+            return `
+              <a class="btn-detail"
+                data-url="${urlpath}"
+                data-id="${row.id}"
+                style="text-decoration: underline; cursor:pointer;">
+                ${data}
+              </a>
+            `;
+          },
+        },
         { data: "phone" },
         { data: "gender" },
         { data: "category" },
@@ -21,9 +34,7 @@ $(document).ready(function () {
         { data: "emergency_contact" },
         { data: "skin_type" },
         { data: "favorite_treatments" },
-        { data: "note" },
-        
-        { data: "action", width: "17%" }
+        { data: "note" }
     ];
 
     gridDatatables(url, columns);
@@ -92,4 +103,9 @@ modalDelete();
   } else if (type === "redirect") {
     window.location.href = url;
   }
+});
+
+$(document).on("click", ".btn-detail", function () {
+  var url = $(this).data("url");
+  window.location.href = url;
 });

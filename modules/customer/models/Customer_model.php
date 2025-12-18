@@ -3,12 +3,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Customer_model extends MY_Model
 {
+    private $fields;
     use MY_Tables;
 
     public function __construct()
     {
         $this->_tabel = "ms_customer";
         parent::__construct();
+        $this->fields = [
+            'id',
+            'name',
+            'phone',
+            'gender',
+            'category',
+            'date_of_birth',
+            'email',
+            'address',
+            'allergies',
+            'blood_type',
+            'emergency_contact',
+            'skin_type',
+            'favorite_treatments',
+            'note'
+        ];
     }
 
     public function list_fields()
@@ -32,25 +49,21 @@ class Customer_model extends MY_Model
 
     public function show()
     {
-        $this->db->select('*');
+        $this->db->select($this->fields);
         $this->db->from($this->_tabel);
 
         $result = $this->db->get()->result();
-
-        foreach ($result as &$row) {
-            $row->action = generateActionButtons($row->id, 'customer',[], $this->getCurrentMenuPermissions());
-        }
 
         return json_encode(['data' => $result]);
     }
 
     public function detail($id)
     {
-        $this->db->select('*');
+        $this->db->select($this->fields);
         $this->db->from("{$this->_tabel}");
         $this->db->where('id', $id);
 
-        return $this->db->get()->row();
+        return json_encode($this->db->get()->row());
     }
 
     public function _validate()
