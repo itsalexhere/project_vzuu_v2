@@ -19,9 +19,40 @@ class Notifications extends MY_Owner
         $this->template->title(ucfirst($this->title));
         $this->setTitlePage(ucfirst($this->title));
         $this->assetsBuild(['datatables']);
-        $this->setJs("customer");
+        $this->setJs($this->path);
 
-        $this->template->build('v_show');
+        $notifications = [
+            [
+                'type'        => 'danger',
+                'icon'        => 'bi-star',
+                'title'       => 'Customer Birthday!',
+                'message'     => "Today is Novia's birthday! Send a birthday message.",
+                'date'        => '12/11/2025',
+                'action_text' => 'Mark as Read',
+            ],
+            [
+                'type'        => 'info',
+                'icon'        => 'bi-bell',
+                'title'       => 'New Appointment',
+                'message'     => 'You have a new appointment request.',
+                'date'        => '13/11/2025',
+                'action_text' => 'Mark as Read',
+            ],
+            [
+                'type'        => 'new',
+                'icon'        => 'bi-bell',
+                'title'       => 'Treatment',
+                'message'     => 'You have a new appointment request.',
+                'date'        => '13/11/2025',
+                'action_text' => 'Mark as Unread',
+            ],
+        ];
+
+        $data = [
+            'notifications' => $notifications
+        ];
+
+        $this->template->build('v_show',$data);
     }
 
     public function show()

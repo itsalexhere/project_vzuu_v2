@@ -50454,7 +50454,7 @@ html:not([data-theme="dark"]) {
   flex-direction: column;
 }
 .app-sidebar-secondary .menu.app-sidebar-menu {
-   padding: 3px;   
+   padding: 8px;   
    font-weight: 500;
 }
 
@@ -50810,9 +50810,9 @@ html:not([data-theme="dark"]) {
 
 .app-sidebar-secondary .menu.app-sidebar-menu > .menu-item .menu-link.active {
     transition: all 0.2s ease;
-    background-color: #fff;
+    background-color: rgba(0, 120, 212, 0.12);
     padding: 0.45rem 0.75rem;
-    border-radius: 10px;
+    border-radius: 5px;
     box-shadow: -1px 0 0 rgba(0,0,0,0.10),0 3px 6px rgba(0,0,0,0.12);
     font-weight: 500;
 }
@@ -51526,6 +51526,7 @@ html:not([data-theme="dark"]) {
     cursor: pointer;
     color: #888;
 }
+
 .custom-table {
   width: 100%;
   border-collapse: separate;
@@ -51562,4 +51563,14 @@ html:not([data-theme="dark"]) {
 .modal-dialog-end {
     margin-left: auto;
     margin-right: 0;
+}
+
+.notification-item:hover {
+    background-color: rgba(0, 120, 212, 0.04);
+    border-color: #c7e0f4;
+    transform: translateY(-1px);
+}
+
+.notification-item:hover .text-gray-900 {
+    color: #0f6cbd;
 }

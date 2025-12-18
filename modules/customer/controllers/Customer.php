@@ -47,9 +47,15 @@ class Customer extends MY_Owner
                 'parentMenu' => "Master"
             ], true),
             'c_input_search' => $this->load->view(PATH_COMPONENTS . 'input/search', "", true),
-            'c_btn_filter' => $this->load->view(PATH_COMPONENTS . 'buttons/filter', ["url"=> $this->path."/side"], true),
-            'c_btn_add' => $this->access['insert'] ? $this->load->view(PATH_COMPONENTS . 'buttons/add', 
-            ["url" => $this->path . "/insert","label" => "Add ". $this->title], true):''
+            'c_btn_filter' => $this->load->view(PATH_COMPONENTS . 'buttons/filter', [
+                "url"=> $this->path."/side"
+            ], true),
+            'c_btn_add' => $this->access['insert'] ? $this->load->view(PATH_COMPONENTS . 'buttons/add', [
+                "url" => $this->path . "/insert",
+                "label" => "Add ". $this->title
+            ], true):'',
+            'c_btn_export' => $this->access['export'] ? $this->load->view(PATH_COMPONENTS . 'buttons/export', ["url" => $this->path . "/side"], true) : '',
+            'c_btn_import' => $this->access['import'] ? $this->load->view(PATH_COMPONENTS . 'buttons/import', ["url" => $this->path . "/side"], true) : ''
         ];
 
         $this->template->build('v_show', ['c_show' => $this->load->view(PATH_COMPONENTS . 'views/v_show', $data, true)]);

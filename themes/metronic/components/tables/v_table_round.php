@@ -40,15 +40,17 @@ endif;
 <div class="d-flex justify-content-between align-items-center mt-4 flex-wrap gap-3">
     <div class="d-flex align-items-center gap-2">
         <span class="text-muted fs-7">Items per page</span>
-        <select id="dt-length" class="form-select form-select-sm w-auto">
-            <option value="5" selected>5</option>
+
+        <select id="dt-length" class="dt-length-select text-muted" style="border: 1px solid #E4E6EF;border-radius: 5px;">
+            <option value="5">5</option>
             <option value="10">10</option>
             <option value="20">20</option>
             <option value="50">50</option>
         </select>
 
-        <div id="dt-info" class="text-muted fs-7"></div>
+        <span id="dt-info" class="text-muted fs-7"></span>
     </div>
+
 
     <ul id="custom-pagination"
         class="pagination pagination-outline mb-0"

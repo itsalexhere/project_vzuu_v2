@@ -20,35 +20,10 @@ class Company_profile_model extends MY_Model
         return $this->db->get()->row();
     }
 
-    public function _validate()
-    {
-        $response = ['success' => false, 'validate' => true, 'messages' => []];
-
-        $this->load->library('form_validation');
-
-        $this->form_validation->set_rules('name', 'Name', ['trim', 'required', 'xss_clean']);
-
-        $this->form_validation->set_error_delimiters('<div class="' . VALIDATION_MESSAGE_FORM . '">', '</div>');
-
-        if ($this->form_validation->run() === false) {
-            $response['validate'] = false;
-            foreach ($this->input->post() as $key => $value) {
-                $response['messages'][$key] = form_error($key);
-            }
-        }
-
-        return $response;
-    }
-
     public function save()
     {
         $this->db->trans_begin();
         try {
-            $response = self::_validate();
-            if (!$response['validate']) {
-                throw new Exception('Validation Error');
-            }
-
             $id = clearInput($this->input->post('id'));
 
             $set_path_file = upload_file('file_upload', 'assets/uploads/company_profile');
@@ -77,6 +52,7 @@ class Company_profile_model extends MY_Model
 
             $this->db->trans_commit();
             $response['success'] = true;
+            $response['validate'] = true;
             $response['messages'] = 'Successfully Saved Data';
             return $response;
         }catch (Exception $e) {

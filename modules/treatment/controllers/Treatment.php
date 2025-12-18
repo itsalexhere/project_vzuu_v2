@@ -42,16 +42,16 @@ class Treatment extends MY_Owner
 
         $data=[
             'tables' => generateTableHtml($headerTable),
-            'c_views_header' => $this->load->view($this->_v_components . 'views/v_header', [
+            'c_views_header' => $this->load->view(PATH_COMPONENTS . 'views/v_header', [
                 'titlePage' => ucfirst($this->title),
                 'parentMenu' => "Master"
             ], true),
-            'c_input_search' => $this->load->view($this->_v_components . 'input/search', "", true),
-            'c_btn_filter' => $this->load->view($this->_v_components . 'buttons/filter', ["url"=> $this->path."/side"], true),
-            'c_btn_add' => $this->access['insert'] ? $this->load->view($this->_v_components . 'buttons/add', ["url" => $this->path . "/insert"], true):''
+            'c_input_search' => $this->load->view(PATH_COMPONENTS . 'input/search', "", true),
+            'c_btn_filter' => $this->load->view(PATH_COMPONENTS . 'buttons/filter', ["url"=> $this->path."/side"], true),
+            'c_btn_add' => $this->access['insert'] ? $this->load->view(PATH_COMPONENTS . 'buttons/add', ["url" => $this->path . "/insert"], true):''
         ];
 
-        $this->template->build('v_show', ['c_show' => $this->load->view($this->_v_components . 'views/v_show', $data, true)]);
+        $this->template->build('v_show', ['c_show' => $this->load->view(PATH_COMPONENTS . 'views/v_show', $data, true)]);
     }
 
     public function show()

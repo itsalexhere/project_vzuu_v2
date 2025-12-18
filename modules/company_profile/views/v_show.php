@@ -62,17 +62,6 @@ $detail = json_decode($details, true);
                             </div>
                         </div>
 
-                        <div class="row mb-6">
-                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">Name</label>
-                            <div class="col-lg-8">
-                                <div class="row">
-                                    <div class="col-lg-12 fv-row">
-                                        <input type="text" id="name" name="name" class="form-control mb-3 mb-lg-0" placeholder="Name" value="<?= $detail['name'] ?>" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="card-footer d-flex justify-content-end p-2">
                             <button class="btn btn-success btn-sm fw-bold text-white" type="button" id="btnProcessModal"><i class="fas fa-save text-white me-1"></i> Save</button>
                         </div>
