@@ -390,3 +390,12 @@ if (!function_exists('renderMenuSection')) {
         ';
 	}
 }
+
+function input_borderless(array $params = [])
+{
+	return get_instance()->load->view(
+		PATH_COMPONENTS . 'input/input_borderless',
+		$params,
+		true
+	);
+}

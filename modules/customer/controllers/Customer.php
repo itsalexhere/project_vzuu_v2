@@ -6,6 +6,7 @@ class Customer extends MY_Owner
     protected $title;
     protected $path;
     private $access;
+    private $url_form;
 
     public function __construct()
     {
@@ -14,6 +15,7 @@ class Customer extends MY_Owner
         $this->path = "customer";
         $this->title = ucfirst($this->path);
         $this->access = $this->getCurrentMenuPermissions();
+        $this->url_form = base_url() . $this->path . "/process";
     }
 
     public function index()
@@ -83,7 +85,7 @@ class Customer extends MY_Owner
 
         $data = [
             'title_modal' => 'New ' . ucfirst($this->title),
-            'url_form' => base_url() . "customer/process",
+            'url_form' => $this->url_form,
             'form' => $this->load->view('v_form', $set_data, true),
         ];
 
@@ -98,7 +100,7 @@ class Customer extends MY_Owner
         $this->template->title('Manage User');
         $this->setTitlePage('Manage User');
         $this->setParent('Master');
-        $this->setJs('user_details');
+        $this->setJs('customer_detail');
 
         $data = [
             'table_doc' => $this->load->view(
@@ -113,7 +115,8 @@ class Customer extends MY_Owner
                 ],
                 true
             ),
-            'details' => $this->customer_model->detail($id)
+            'details' => $this->customer_model->detail($id),
+            'url_form' => $this->url_form
         ];
 
         $this->template->build('v_form_detail', $data);
@@ -143,7 +146,7 @@ class Customer extends MY_Owner
 
         $data = [
             'title_modal' => 'Filter',
-            'url_form' => base_url() . "customer/process",
+            'url_form' => $this->url_form,
             'form' => $this->load->view('v_form_side', "", true),
         ];
 

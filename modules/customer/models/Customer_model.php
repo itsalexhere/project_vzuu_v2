@@ -72,7 +72,7 @@ class Customer_model extends MY_Model
 
         $this->load->library('form_validation');
 
-                $this->form_validation->set_rules('name', 'Name', ['trim', 'required', 'xss_clean']);
+        $this->form_validation->set_rules('name', 'Name', ['trim', 'required', 'xss_clean']);
         $this->form_validation->set_rules('phone', 'Phone', ['trim', 'required', 'xss_clean']);
         $this->form_validation->set_rules('gender', 'Gender', ['trim', 'required', 'xss_clean']);
         $this->form_validation->set_rules('category', 'Category', ['trim', 'required', 'xss_clean']);
@@ -102,16 +102,13 @@ class Customer_model extends MY_Model
     {
         $this->db->trans_begin();
         try {
-            // Jalankan Validasi
             $response = self::_validate();
             if (!$response['validate']) {
                 throw new Exception('Validation Error');
             }
 
-            // Ambil ID (jika ada)
             $id = clearInput($this->input->post('id'));
 
-            // Ambil semua post data
             $postData = $this->input->post();
 
             $fields = [];
@@ -127,11 +124,10 @@ class Customer_model extends MY_Model
             }
 
             if (!$execute) {
-                $response['messages'] = 'Insert / Update Data Gagal!';
+                $response['messages'] = 'Error Saved Data!!';
                 throw new Exception('DB Error');
             }
 
-            // Commit
             $this->db->trans_commit();
             $response['success'] = true;
             $response['messages'] = 'Successfully Saved Data';
