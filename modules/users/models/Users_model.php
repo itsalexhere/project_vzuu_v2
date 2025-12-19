@@ -229,25 +229,67 @@ class Users_model extends MY_Model
 
             foreach ($accessList as $row) {
 
-                $id = $row['id'];
+                if (!empty($row['access_view'])) {
+                    $accessView = $row['access_view'];
 
-                $dataUpdate = [
-                    'view'    => (int) $row['view'],
-                    'insert'  => (int) $row['insert'],
-                    'update'  => (int) $row['update'],
-                    'delete'  => (int) $row['delete'],
-                    'export'  => (int) $row['export'],
-                    'import'  => (int) $row['import']
+                    $dataControl = [
+                        'view'   => !empty($accessView['view']) ? (int)$accessView['view'] : 0,
+                        'insert' => !empty($accessView['insert']) ? (int)$accessView['insert'] : 0,
+                        'update' => !empty($accessView['update']) ? (int)$accessView['update'] : 0,
+                        'delete' => !empty($accessView['delete']) ? (int)$accessView['delete'] : 0,
+                        'export' => !empty($accessView['export']) ? (int)$accessView['export'] : 0,
+                        'import' => !empty($accessView['import']) ? (int)$accessView['import'] : 0,
+                    ];
+
+                    $exists = $this->db
+                        ->where('id', $row['id'] ?? 0)
+                        ->get($this->_table_ms_user_accesscontrols)
+                        ->row();
+
+                    if ($exists) {
+                        $this->db->where('id', $exists->id);
+                        $execute = $this->db->update($this->_table_ms_user_accesscontrols, $dataControl);
+                        if (!$execute) {
+                            throw new Exception('Failed update accesscontrols id: ' . $exists->id);
+                        }
+                    } else {
+                        $dataControl['ms_menus_id'] = $row['idMenu'];
+                        $dataControl['ms_user_id'] = $row['idUser'];
+                        
+                        $this->db->insert($this->_table_ms_user_accesscontrols, $dataControl);
+                        if ($this->db->affected_rows() < 1) {
+                            throw new Exception('Failed insert new accesscontrols for menu id: ' . $row['idMenu']);
+                        }
+                    }
+                }
+
+
+                $data = [
+                    'ms_menu_id'  => $row['idMenu'],
+                    'ms_user_id'  => $row['idUser'],
+                    'id'     => $row['view_id'],
+                    'access_view' => !empty($row['access_table']) ? implode(',', $row['access_table']) : ''
                 ];
 
-                $this->db->where('id', $id);
-                $execute = $this->db->update(
-                    $this->_table_ms_user_accesscontrols,
-                    $dataUpdate
-                );
+                $exists = $this->db
+                    ->where('ms_menu_id', $row['idMenu'])
+                    ->where('ms_user_id', $row['idUser'])
+                    ->where('id', $row['view_id'])
+                    ->get($this->_table_ms_user_accessviewtable)
+                    ->row();
 
-                if (!$execute) {
-                    throw new Exception('Failed update access id: ' . $id);
+                if ($exists) {
+                    $this->db
+                        ->where('id', $exists->id)
+                        ->update($this->_table_ms_user_accessviewtable, [
+                            'access_view' => $data['access_view']
+                        ]);
+                } else {
+                    $this->db->insert($this->_table_ms_user_accessviewtable, $data);
+                }
+
+                if ($this->db->affected_rows() < 0) {
+                    throw new Exception('Failed save access');
                 }
             }
 

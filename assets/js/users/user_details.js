@@ -66,31 +66,35 @@ $(document).on("click", "#save_form_access", function () {
 
   $("#table-access-view tbody tr").each(function () {
       var $tr = $(this);
+
       var menuId = $tr.find('.control-id').val();
       var viewId = $tr.find('.view-id').val();
+      var idMenu = $tr.find('.menu-id').val();
+      var idUser = $tr.find('.user-id').val();
       var status = $tr.find('td:nth-child(3) input.form-check-input').is(':checked') ? 1 : 0;
-      
-      var fields = [];
-      $tr.find('td:nth-child(2) .dropdown-menu input.form-check-input:checked').each(function () {
-          fields.push($(this).val());
+
+      var accessTable = [];
+      $tr.find('.field-checkbox:checked').each(function () {
+          accessTable.push($(this).val());
       });
 
-      // Ambil role permissions
-      var roles = {
-          view: $tr.find('#view' + menuId).is(':checked') ? 1 : 0,
+      var accessView = {
+          view:   $tr.find('#view' + menuId).is(':checked') ? 1 : 0,
           insert: $tr.find('#insert' + menuId).is(':checked') ? 1 : 0,
           update: $tr.find('#update' + menuId).is(':checked') ? 1 : 0,
           delete: $tr.find('#delete' + menuId).is(':checked') ? 1 : 0,
           export: $tr.find('#export' + menuId).is(':checked') ? 1 : 0,
-          import: $tr.find('#import' + menuId).is(':checked') ? 1 : 0,
+          import: $tr.find('#import' + menuId).is(':checked') ? 1 : 0
       };
 
       dataToSend.push({
-          id: menuId,              
-          view_id: viewId,      
-          status: status,           
-          access_view: fields.join(','), 
-          ...roles                 
+          id: menuId,
+          view_id: viewId,
+          idMenu: idMenu,
+          idUser: idUser,
+          status: status,
+          access_table: accessTable,   
+          access_view: accessView 
       });
   });
 

@@ -87,7 +87,9 @@ class Menu_model extends MY_Model
     public function getUserMenuById($user_id)
     {
         $this->db->select(" b.id as id_access_control,
-	                        d.id as id_access_view,
+                            e.id as id_access_view,
+                            e.access_view,
+                            a.id as id_menu,
                             a.name,
                             a.status,
                             a.category,
@@ -98,16 +100,16 @@ class Menu_model extends MY_Model
                             b.import,
                             b.export,
                             c.name AS parent_name,
-                            d.access_view ", false);
+                            d.fields ", false);
         $this->db->from("{$this->_table_ms_menus} a");
         $this->db->join("{$this->_table_ms_user_accesscontrols} b", "b.ms_menus_id = a.id AND b.ms_user_id = {$user_id}", "inner");
         $this->db->join("{$this->_table_ms_menus} c", "c.id = a.parent", "left");
-        $this->db->join("{$this->_table_ms_user_accessviewtable} d", "d.ms_menu_id = a.id", "left");
+        $this->db->join("{$this->_table_ms_menus_table_views} d", "d.ms_menus_id = a.id", "left");
+        $this->db->join("{$this->_table_ms_user_accessviewtable} e", "e.ms_menu_id = a.id", "left");
 
         $this->db->where("b.id IS NOT NULL", null, false);
         $this->db->where("a.name !=", "Beranda");
-        // $this->db->where("(a.parent IS NOT NULL AND a.parent != '' AND a.parent != '0')", null, false);
-
+    
         $result = $this->db->get()->result();
 
         return json_encode(['data' => $result]);

@@ -161,10 +161,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     $access = json_decode($list_access, true)['data'] ?? [];
 
                                     foreach ($access as $menu) {
-                                        $fields = !empty($menu['access_view']) ? explode(',', $menu['access_view']) : [];
+                                        $fields = !empty($menu['fields']) ? explode(',', $menu['fields']) : [];
 
                                         $permissions = [];
-                                        
+
                                         if (!empty($menu['view']) && $menu['view'] == 1) $permissions[] = 'View';
                                         if (!empty($menu['insert']) && $menu['insert'] == 1) $permissions[] = 'Create';
                                         if (!empty($menu['update']) && $menu['update'] == 1) $permissions[] = 'Edit';
@@ -173,10 +173,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         if (!empty($menu['import']) && $menu['import'] == 1) $permissions[] = 'Import';
 
                                         $buttonLabel = !empty($permissions) ? implode(', ', $permissions) : 'Select option';
+
+                                        $fields = !empty($menu['fields']) ? array_map('trim', explode(',', $menu['fields'])) : [];
+
+                                        $selectedFields = [];
+                                        if (!empty($menu['access_view'])) {
+                                            $selectedFields = array_map('trim', explode(',', $menu['access_view']));
+                                        }
+
+                                        $fieldButtonLabel = 'No Fields';
+
+                                        if (!empty($selectedFields)) {
+                                            $fieldButtonLabel = implode(', ', $selectedFields);
+                                        }
+
                                     ?>
                                         <tr>
                                             <input type="hidden" class="control-id" value="<?= $menu['id_access_control'] ?>" />
                                             <input type="hidden" class="view-id" value="<?= $menu['id_access_view'] ?>" />
+                                            <input type="hidden" class="menu-id" value="<?= $menu['id_menu'] ?>" />
+                                            <input type="hidden" class="user-id" value="<?= $user_detail['id'] ?? 0 ?>" />
 
                                             <td><?= $menu['name'] ?></td>
                                             <td>
@@ -187,25 +203,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         data-bs-toggle="dropdown"
                                                         data-bs-display="static"
                                                         aria-expanded="false" style="width: 550px;">
-                                                        <?= empty($fields) ? 'No Fields' : 'Select Option' ?>
+                                                        <?= $fieldButtonLabel ?>
                                                     </button>
 
                                                     <ul class="dropdown-menu p-3" style="width: 550px;">
                                                         <?php foreach ($fields as $field): ?>
                                                             <li>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input"
+                                                                    <input class="form-check-input field-checkbox"
                                                                         type="checkbox"
                                                                         value="<?= $field ?>"
-                                                                        id="flexCheckDefault<?= $menu['id_access_control'] . '-' . $field ?>" />
-                                                                    <label class="form-check-label fs-6" for="flexCheckDefault<?= $menu['id_access_control'] . '-' . $field ?>">
+                                                                        id="flexCheckDefault<?= $menu['id_access_control'] . '-' . $field ?>"
+                                                                        <?= in_array($field, $selectedFields) ? 'checked' : '' ?> />
+
+                                                                    <label class="form-check-label fs-6"
+                                                                        for="flexCheckDefault<?= $menu['id_access_control'] . '-' . $field ?>">
                                                                         <?= $field ?>
                                                                     </label>
                                                                 </div>
                                                             </li>
                                                         <?php endforeach; ?>
                                                     </ul>
-                                                </div>
                                             </td>
                                             <td>
                                                 <label class="form-check form-switch form-check-custom form-check-solid">
