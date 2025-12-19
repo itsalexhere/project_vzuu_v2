@@ -17,8 +17,6 @@ class Users extends MY_Owner
 			'process',
 			'status',
 			'paging',
-			'update_permission',
-			'data_menu',
 			'access_menu',
 			'process_access_menu',
 			'detail'
@@ -92,6 +90,16 @@ class Users extends MY_Owner
 		$this->setParent('Master');
 		$this->setJs('user_details');
 
+		// $viewTable = $this->db
+		// 	->select('access_view')
+		// 	->from('ms_user_accessviewtable')
+		// 	->where('ms_menu_id', 'ee2b0c52-7164-4f56-9b8a-88ad291f59e7')
+		// 	->where('ms_user_id', '1')
+		// 	->get()
+		// 	->row_array();
+
+		// pre($viewTable);
+
 		$data = [
 			'user_detail' => $this->users_model->findById($id),
 			'list_access' => $this->menu->getUserMenuById($id)
@@ -106,15 +114,6 @@ class Users extends MY_Owner
 		$this->function_access('insert');
 
 		$response = $this->users_model->save();
-		echo json_encode($response);
-		exit();
-	}
-
-	public function update_permission()
-	{
-		isAjaxRequestWithPost();
-
-		$response = $this->access_control->update_permission();
 		echo json_encode($response);
 		exit();
 	}
@@ -159,49 +158,5 @@ class Users extends MY_Owner
 			echo json_encode($response);
 			exit();
 		}
-	}
-
-	public function data_menu()
-	{
-		$id = $this->input->post('id');
-		$keyword = $this->input->post('keyword');
-
-		if (empty($id)) {
-			return [];
-		}
-
-		$menus = $this->menu->_getRawMenuDataByUserId($id, $keyword);
-
-		$menu_map = [];
-		$children_map = [];
-
-		foreach ($menus as $menu) {
-			$menu_map[$menu['id']] = $menu;
-			if ($menu['parent'] != 0) {
-				$children_map[$menu['parent']][] = $menu;
-			}
-		}
-
-		$detailForm = [
-			'user_id' => $this->session->user_id,
-			'menu_map' => $menu_map,
-			'children_map' => $children_map
-		];
-
-		echo json_encode(['data' => $detailForm]);
-	}
-
-	public function access_menu()
-	{
-		$this->template->title('Users Access Menu');
-		$this->setTitlePage('Users Access Menu');
-		$this->setParent('Master');
-		$this->assetsBuild(['datatables']);
-		$this->setJs('users_access_menu');
-
-		$header_table = array('no', 'menu', 'status', 'parent', "view", "insert", "update", "delete", "import", "export");
-		$data['tables'] = generateTableHtml($header_table);
-
-		$this->template->build('v_access_menu', $data);
 	}
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 12 Des 2025 pada 06.44
+-- Waktu pembuatan: 19 Des 2025 pada 07.32
 -- Versi server: 5.7.17-log
 -- Versi PHP: 8.1.10
 
@@ -63,7 +63,7 @@ CREATE TABLE `ms_company_profile` (
 --
 
 INSERT INTO `ms_company_profile` (`id`, `name`, `image_path`, `created_by`, `created_at`, `updated_by`, `updated_at`, `deleted_by`, `deleted_at`) VALUES
-(2, 'Project', 'assets/uploads/company_profile/_7195368.png', '1', '2025-12-06 03:29:40', NULL, NULL, NULL, NULL);
+(2, NULL, 'assets/uploads/company_profile/_logo.png', '1', '2025-12-06 03:29:40', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -85,7 +85,8 @@ CREATE TABLE `ms_create_table` (
 
 INSERT INTO `ms_create_table` (`id`, `name`, `description`, `created_by`, `created_at`) VALUES
 (18, 'ms_branch', '', '1', '2025-12-09 09:07:08'),
-(19, 'ms_roles', '', '1', '2025-12-10 02:22:54');
+(19, 'ms_roles', '', '1', '2025-12-10 02:22:54'),
+(20, 'ms_customer', '', '1', '2025-12-15 02:13:24');
 
 -- --------------------------------------------------------
 
@@ -110,7 +111,20 @@ INSERT INTO `ms_create_table_detail` (`id`, `ms_create_table_id`, `name_table`, 
 (47, 18, 'name', 'VARCHAR', 255, 'null'),
 (48, 18, 'address', 'VARCHAR', 255, 'null'),
 (49, 18, 'description', 'VARCHAR', 255, 'null'),
-(50, 19, 'name', 'VARCHAR', 255, 'null');
+(50, 19, 'name', 'VARCHAR', 255, 'null'),
+(51, 20, 'name', 'VARCHAR', 255, 'null'),
+(52, 20, 'phone', 'VARCHAR', 255, 'null'),
+(53, 20, 'gender', 'VARCHAR', 255, 'null'),
+(54, 20, 'category', 'VARCHAR', 255, 'null'),
+(55, 20, 'date of birth', 'DATE', 0, 'null'),
+(56, 20, 'email', 'VARCHAR', 255, 'null'),
+(57, 20, 'address', 'VARCHAR', 255, 'null'),
+(58, 20, 'allergies', 'VARCHAR', 255, 'null'),
+(59, 20, 'blood_type', 'VARCHAR', 255, 'null'),
+(60, 20, 'emergency contact', 'VARCHAR', 255, 'null'),
+(61, 20, 'skin type', 'VARCHAR', 255, 'null'),
+(62, 20, 'favorite treatments', 'VARCHAR', 255, 'null'),
+(63, 20, 'note', 'VARCHAR', 255, 'null');
 
 -- --------------------------------------------------------
 
@@ -121,18 +135,34 @@ INSERT INTO `ms_create_table_detail` (`id`, `ms_create_table_id`, `name_table`, 
 CREATE TABLE `ms_customer` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `alias` varchar(255) DEFAULT NULL,
-  `date` date DEFAULT NULL
+  `phone` varchar(255) DEFAULT NULL,
+  `gender` varchar(255) DEFAULT NULL,
+  `category` varchar(255) DEFAULT NULL,
+  `date_of_birth` date DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `allergies` varchar(255) DEFAULT NULL,
+  `blood_type` varchar(255) DEFAULT NULL,
+  `emergency_contact` varchar(255) DEFAULT NULL,
+  `skin_type` varchar(255) DEFAULT NULL,
+  `favorite_treatments` varchar(255) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `created_by` varchar(25) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` varchar(25) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_by` varchar(25) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `ms_customer`
 --
 
-INSERT INTO `ms_customer` (`id`, `name`, `alias`, `date`) VALUES
-(6, 'asas', 'sffasfsafasf', '2025-12-03'),
-(9, 'sdfsdf', 'sfsdfsdfsdf', '2025-12-10'),
-(11, 'sdvsdv', 'sdvdsvsdvdsvv', '2025-12-10');
+INSERT INTO `ms_customer` (`id`, `name`, `phone`, `gender`, `category`, `date_of_birth`, `email`, `address`, `allergies`, `blood_type`, `emergency_contact`, `skin_type`, `favorite_treatments`, `note`, `created_by`, `created_at`, `updated_by`, `updated_at`, `deleted_by`, `deleted_at`) VALUES
+(1, 'Novia Amelia', '081234567890', 'F', 'Regular', '1996-11-12', 'novia.amelia@mail.com', 'Jakarta Selatan', '-', 'O', '081298765432', 'Normal', 'Facial Brightening', '-', '1', '2025-12-18 07:23:34', NULL, NULL, NULL, NULL),
+(2, 'Rizky Pratama', '082112223333', 'M', 'VIP', '1992-05-20', 'rizky.pratama@mail.com', 'Bandung', '-', 'A', '082133344455', 'Oily', 'Acne Treatment', '-', '1', '2025-12-18 07:23:34', NULL, NULL, NULL, NULL),
+(3, 'Naura', '123456', 'Female', 'test', '2025-12-31', 'test@gggg.com', 'test', 'Udang', 'UBAH', 'UBAH', 'Belang', 'UBAH', 'UBAH', NULL, '2025-12-19 01:15:57', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -160,7 +190,8 @@ CREATE TABLE `ms_form` (
 
 INSERT INTO `ms_form` (`id`, `form_code`, `form_name`, `form_type`, `table_name`, `description`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
 (80, '', 'Branch', 'Form', 'ms_branch', 'Master Cabang', '1', '1', '2025-12-09 09:07:08', '', '0000-00-00 00:00:00'),
-(81, '', 'Roles', 'Form', 'ms_roles', 'Master Roles', '1', '1', '2025-12-10 02:22:54', '', '0000-00-00 00:00:00');
+(81, '', 'Roles', 'Form', 'ms_roles', 'Master Roles', '1', '1', '2025-12-10 02:22:54', '', '0000-00-00 00:00:00'),
+(82, '', 'Customer', 'Form', 'ms_customer', 'Master Customer', '1', '1', '2025-12-15 02:13:24', '', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -193,7 +224,20 @@ INSERT INTO `ms_form_fields` (`id`, `form_id`, `field_label`, `field_name`, `fie
 (187, '80', 'Name', 'name', 'text', 'Name', 'col-md-12', '1', 1, '1', '1', '2025-12-09 09:07:08', '', '0000-00-00 00:00:00'),
 (188, '80', 'Address', 'address', 'text', 'Address', 'col-md-12', '1', 2, '1', '1', '2025-12-09 09:07:08', '', '0000-00-00 00:00:00'),
 (189, '80', 'Description', 'description', 'text', 'Description', 'col-md-12', '1', 3, '1', '1', '2025-12-09 09:07:08', '', '0000-00-00 00:00:00'),
-(190, '81', 'Name', 'name', 'text', 'Name', 'col-md-12', '1', 1, '1', '1', '2025-12-10 02:22:54', '', '0000-00-00 00:00:00');
+(190, '81', 'Name', 'name', 'text', 'Name', 'col-md-12', '1', 1, '1', '1', '2025-12-10 02:22:54', '', '0000-00-00 00:00:00'),
+(191, '82', 'Name', 'name', 'text', 'Name', 'col-md-3', '1', 1, '1', '1', '2025-12-15 02:13:24', '', '0000-00-00 00:00:00'),
+(192, '82', 'Phone', 'phone', 'text', 'Phone', 'col-md-3', '1', 2, '1', '1', '2025-12-15 02:13:24', '', '0000-00-00 00:00:00'),
+(193, '82', 'Gender', 'gender', 'text', 'Gender', 'col-md-3', '1', 3, '1', '1', '2025-12-15 02:13:24', '', '0000-00-00 00:00:00'),
+(194, '82', 'Category', 'category', 'text', 'Category', 'col-md-3', '1', 4, '1', '1', '2025-12-15 02:13:24', '', '0000-00-00 00:00:00'),
+(195, '82', 'Date Of Birth', 'date_of_birth', 'date', 'Date Of Birth', 'col-md-3', '1', 5, '1', '1', '2025-12-15 02:13:24', '', '0000-00-00 00:00:00'),
+(196, '82', 'Email', 'email', 'text', 'Email', 'col-md-3', '1', 6, '1', '1', '2025-12-15 02:13:24', '', '0000-00-00 00:00:00'),
+(197, '82', 'Address', 'address', 'text', 'Address', 'col-md-3', '1', 7, '1', '1', '2025-12-15 02:13:24', '', '0000-00-00 00:00:00'),
+(198, '82', 'Allergies', 'allergies', 'text', 'Allergies', 'col-md-3', '1', 8, '1', '1', '2025-12-15 02:13:24', '', '0000-00-00 00:00:00'),
+(199, '82', 'Blood_type', 'blood_type', 'text', 'Blood_type', 'col-md-3', '1', 9, '1', '1', '2025-12-15 02:13:24', '', '0000-00-00 00:00:00'),
+(200, '82', 'Emergency Contact', 'emergency_contact', 'text', 'Emergency Contact', 'col-md-3', '1', 10, '1', '1', '2025-12-15 02:13:24', '', '0000-00-00 00:00:00'),
+(201, '82', 'Skin Type', 'skin_type', 'text', 'Skin Type', 'col-md-3', '1', 11, '1', '1', '2025-12-15 02:13:24', '', '0000-00-00 00:00:00'),
+(202, '82', 'Favorite Treatments', 'favorite_treatments', 'text', 'Favorite Treatments', 'col-md-3', '1', 12, '1', '1', '2025-12-15 02:13:24', '', '0000-00-00 00:00:00'),
+(203, '82', 'Note', 'note', 'text', 'Note', 'col-md-3', '1', 13, '1', '1', '2025-12-15 02:13:24', '', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -84058,18 +84102,17 @@ CREATE TABLE `ms_menus` (
 --
 
 INSERT INTO `ms_menus` (`id`, `category`, `controller`, `name`, `icon`, `parent`, `order`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`, `deleted_at`, `deleted_by`) VALUES
-('63c3ed2a-7527-11f0-870d-d61f882f8b66', NULL, 'dashboard', 'Beranda', 'fonticon-house', '0', 11, 1, 'SYSTEM', '2023-11-03 16:10:14', '1', '2025-08-10 21:01:15', NULL, NULL),
-('63c3fb94-7527-11f0-870d-d61f882f8b66', NULL, 'master', 'Master', 'bi bi-database-gear', '0', 1, 1, 'SYSTEM', '2024-01-06 10:52:25', '1', '2025-11-16 19:43:56', NULL, NULL),
-('63c3fd88-7527-11f0-870d-d61f882f8b66', NULL, 'menu', 'Menu', 'none', '63c3fb94-7527-11f0-870d-d61f882f8b66', 4, 1, 'SYSTEM', '2024-02-13 05:40:36', '1', '2025-08-09 08:49:28', NULL, NULL),
-('63c3ff0e-7527-11f0-870d-d61f882f8b66', NULL, 'users', 'User Role', 'fa fa-cogs', '0', 17, 1, 'SYSTEM', '2024-01-24 01:46:15', '1', '2025-12-11 20:28:25', '2025-11-28 00:39:47', '1'),
-('a4f5587d-78a6-43d8-a762-d115a8060fa6', NULL, 'setting', 'Pengaturan', 'fa fa-cogs', '0', 12, 1, '1', '2025-08-11 01:16:01', '1', '2025-08-10 18:24:55', NULL, NULL),
-('fbaa32be-5c32-439f-a864-0c22d00230a4', NULL, 'gen_form', 'Form', 'none', '2426ac08-7e98-4439-9621-ed67c59c698c', 8, 1, '1', '2025-11-17 00:52:46', '1', '2025-12-06 04:37:22', NULL, NULL),
-('156b7091-c8a1-4654-8825-5b8c1df60df6', NULL, 'customer', 'Customer', 'none', '63c3fb94-7527-11f0-870d-d61f882f8b66', 2, 1, '1', '2025-11-21 06:17:07', NULL, NULL, NULL, NULL),
-('2426ac08-7e98-4439-9621-ed67c59c698c', NULL, 'settings', 'Settings', 'bi bi-gear-wide-connected', '0', 9, 1, '1', '2025-12-05 08:16:50', '1', '2025-12-05 01:17:10', NULL, NULL),
-('6922a4ee-dbe8-46ff-a0a7-1a4cbb090d84', NULL, 'company_profile', 'Default', 'none', '2426ac08-7e98-4439-9621-ed67c59c698c', 10, 1, '1', '2025-12-05 08:24:31', '1', '2025-12-07 18:12:50', NULL, NULL),
-('19eed1d5-d4a8-42a5-a001-c263f33648ca', NULL, 'report', 'Report', 'bi bi-files', '0', 6, 1, '1', '2025-12-08 08:01:01', NULL, NULL, NULL, NULL),
-('0297dd7d-3b54-4534-ba98-b092ed8680cd', NULL, 'report_test', 'Test', 'none', '19eed1d5-d4a8-42a5-a001-c263f33648ca', 7, 1, '1', '2025-12-08 08:07:59', NULL, NULL, NULL, NULL),
-('072f13f5-b029-47c7-abe1-3c4a1c05cbc8', NULL, 'roles', 'Roles', '', '63c3fb94-7527-11f0-870d-d61f882f8b66', 13, 1, '1', '2025-12-10 02:22:54', NULL, NULL, NULL, NULL);
+('072f13f5-b029-47c7-abe1-3c4a1c05cbc8', 'database', 'roles', 'Roles', '', '63c3fb94-7527-11f0-870d-d61f882f8b66', 7, 1, '1', '2025-12-10 02:22:54', NULL, NULL, NULL, NULL),
+('63c3ed2a-7527-11f0-870d-d61f882f8b66', NULL, 'dashboard', 'Beranda', 'fonticon-house', '0', 6, 1, 'SYSTEM', '2023-11-03 16:10:14', '1', '2025-08-10 21:01:15', NULL, NULL),
+('63c3fb94-7527-11f0-870d-d61f882f8b66', 'database', 'master', 'Master', 'bi bi-database-gear', '0', 1, 1, 'SYSTEM', '2024-01-06 10:52:25', '1', '2025-11-16 19:43:56', NULL, NULL),
+('63c3fd88-7527-11f0-870d-d61f882f8b66', 'database', 'menu', 'Menu', 'none', '63c3fb94-7527-11f0-870d-d61f882f8b66', 2, 1, 'SYSTEM', '2024-02-13 05:40:36', '1', '2025-08-09 08:49:28', NULL, NULL),
+('63c3ff0e-7527-11f0-870d-d61f882f8b66', 'user', 'users', 'User Role', 'bi bi-person-gear', '0', 18, 1, 'SYSTEM', '2024-01-24 01:46:15', '1', '2025-12-17 21:20:54', '2025-11-28 00:39:47', '1'),
+('6922a4ee-dbe8-46ff-a0a7-1a4cbb090d84', 'settings', 'company_profile', 'Default', 'bi bi-gear', '0', 15, 1, 'SYSTEM', '2025-12-05 08:24:31', '1', '2025-12-17 21:19:27', NULL, NULL),
+('9c1a5ec7-5233-4e64-8fc5-48fdd8e1c6de', 'database', 'treatment', 'Treatment', 'bi bi-clipboard2-pulse', '0', 11, 1, 'SYSTEM', '2025-11-17 00:52:46', NULL, NULL, NULL, NULL),
+('cb0c3254-208b-4076-aa97-a0e847da5e2f', 'database', 'appointment', 'Appointment', 'bi bi-alarm', '0', 12, 1, 'SYSTEM', '2025-11-17 00:52:46', NULL, NULL, NULL, NULL),
+('ea84f584-4a65-45c5-8687-d4ce7d133674', NULL, 'notifications', 'Notifications', 'bi bi-bell', '0', 10, 1, 'SYSTEM', '2025-12-15 07:48:43', NULL, NULL, NULL, NULL),
+('ee2b0c52-7164-4f56-9b8a-88ad291f59e7', 'database', 'customer', 'Customer', 'bi bi-person-check', '0', 9, 1, 'SYSTEM', '2025-12-15 02:13:24', NULL, NULL, NULL, NULL),
+('fbaa32be-5c32-439f-a864-0c22d00230a4', 'database', 'gen_form', 'Form', 'none', '2426ac08-7e98-4439-9621-ed67c59c698c', 3, 0, 'SYSTEM', '2025-11-17 00:52:46', '1', '2025-12-06 04:37:22', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -84156,7 +84199,7 @@ CREATE TABLE `ms_users` (
 --
 
 INSERT INTO `ms_users` (`id`, `username`, `role_id`, `email`, `password`, `remember_token`, `notes`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`, `active_at`) VALUES
-(1, 'superadmin', NULL, 'superadmin@gmail.com', '$2y$10$h0hdCw1g1yTlFto/53pYc.BvFL9YqDiEYu1mSwc.cqC26/fEUexBm', 'DqF2ZGHgjQ8EnuCTx6bM3L0RmOzNs7VKcBpIiAehawrlkfXJ1PS95WU4Yydtvo', NULL, 1, 'SYSTEM', '2023-11-03 16:10:14', '', '2025-12-12 05:36:00', '2025-12-11 02:22:41');
+(1, 'superadmin', NULL, 'superadmin@gmail.com', '$2y$10$h0hdCw1g1yTlFto/53pYc.BvFL9YqDiEYu1mSwc.cqC26/fEUexBm', 'LgHfiEJm3vxGSV6908jWNKqZPe2Dpua1BYRhtQ7sXA5ClFycOnU4rzTokIwbdM', NULL, 1, 'SYSTEM', '2023-11-03 16:10:14', '', '2025-12-19 01:08:56', '2025-12-11 02:22:41');
 
 -- --------------------------------------------------------
 
@@ -84183,19 +84226,43 @@ CREATE TABLE `ms_user_accesscontrols` (
 --
 
 INSERT INTO `ms_user_accesscontrols` (`id`, `ms_menus_id`, `ms_user_id`, `view`, `insert`, `update`, `delete`, `import`, `export`, `created_by`, `created_at`) VALUES
+('1f143d6b-c11d-43e6-a7ec-d23d9a31358c', 'ee2b0c52-7164-4f56-9b8a-88ad291f59e7', '1', 1, 1, 1, 1, 1, 1, NULL, '2025-12-15 02:13:24'),
 ('21f765f8-7ca4-47b4-a3f2-da67188956bf', '072f13f5-b029-47c7-abe1-3c4a1c05cbc8', '1', 1, 1, 1, 1, 0, 0, NULL, '2025-12-10 02:22:54'),
+('5378711e-19e1-4b2f-bc38-9850b01236ef', 'ea84f584-4a65-45c5-8687-d4ce7d133674', '1', 1, 1, 1, 1, 0, 0, NULL, '2025-12-15 07:49:53'),
 ('850ea312-d40c-11f0-9726-0250bfb1060d', '63c3ed2a-7527-11f0-870d-d61f882f8b66', '1', 1, 1, 1, 1, 1, 1, '1', '2025-12-08 08:03:57'),
 ('850eadc8-d40c-11f0-9726-0250bfb1060d', '63c3fb94-7527-11f0-870d-d61f882f8b66', '1', 1, 1, 1, 1, 1, 1, '1', '2025-12-08 08:03:57'),
-('850eaebc-d40c-11f0-9726-0250bfb1060d', '63c3fd88-7527-11f0-870d-d61f882f8b66', '1', 1, 1, 1, 1, 0, 0, '1', '2025-12-08 08:03:57'),
+('850eaebc-d40c-11f0-9726-0250bfb1060d', '63c3fd88-7527-11f0-870d-d61f882f8b66', '1', 1, 1, 1, 1, 1, 0, '1', '2025-12-08 08:03:57'),
 ('850eaf00-d40c-11f0-9726-0250bfb1060d', '63c3ff0e-7527-11f0-870d-d61f882f8b66', '1', 1, 1, 1, 1, 0, 0, '1', '2025-12-08 08:03:57'),
 ('850eaf35-d40c-11f0-9726-0250bfb1060d', '63c4420c-7527-11f0-870d-d61f882f8b66', '1', 1, 1, 1, 1, 0, 0, '1', '2025-12-08 08:03:57'),
 ('850eb010-d40c-11f0-9726-0250bfb1060d', 'fbaa32be-5c32-439f-a864-0c22d00230a4', '1', 1, 1, 1, 1, 0, 0, '1', '2025-12-08 08:03:57'),
-('850eb040-d40c-11f0-9726-0250bfb1060d', '156b7091-c8a1-4654-8825-5b8c1df60df6', '1', 0, 0, 0, 0, 0, 0, '1', '2025-12-08 08:03:57'),
+('850eb040-d40c-11f0-9726-0250bfb1060d', '156b7091-c8a1-4654-8825-5b8c1df60df6', '1', 1, 1, 1, 1, 0, 0, '1', '2025-12-08 08:03:57'),
 ('850eb079-d40c-11f0-9726-0250bfb1060d', '2426ac08-7e98-4439-9621-ed67c59c698c', '1', 1, 1, 1, 1, 1, 1, '1', '2025-12-08 08:03:57'),
 ('850eb0ab-d40c-11f0-9726-0250bfb1060d', '6922a4ee-dbe8-46ff-a0a7-1a4cbb090d84', '1', 1, 1, 1, 1, 0, 0, '1', '2025-12-08 08:03:57'),
 ('850eb0d7-d40c-11f0-9726-0250bfb1060d', '19eed1d5-d4a8-42a5-a001-c263f33648ca', '1', 1, 1, 1, 1, 1, 1, '1', '2025-12-08 08:03:57'),
 ('850eb0d7-d40c-11f0-9726-78555fb1060d', '0297dd7d-3b54-4534-ba98-b092ed8680cd', '1', 1, 0, 0, 0, 0, 0, '1', '2025-12-08 08:03:57'),
-('b3cd30ea-b3fb-4243-955c-13a27306f2ed', 'e5f75ff1-8e50-4d30-8273-6414cd1c06aa', '1', 0, 0, 0, 0, 0, 0, NULL, '2025-12-09 08:48:51');
+('96ba6e07-dc97-4131-add4-d47f1fb603cb', 'cb0c3254-208b-4076-aa97-a0e847da5e2f', '1', 1, 1, 1, 1, 1, 1, '1', '2025-12-09 08:48:51'),
+('b3cd30ea-b3fb-4243-955c-13a27306f2ed', 'e5f75ff1-8e50-4d30-8273-6414cd1c06aa', '1', 0, 0, 0, 0, 0, 0, NULL, '2025-12-09 08:48:51'),
+('ffca0779-67e2-475f-be13-78d85c1bf99f', '9c1a5ec7-5233-4e64-8fc5-48fdd8e1c6de', '1', 1, 1, 1, 1, 1, 1, '1', '2025-12-09 08:48:51');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `ms_user_accessviewtable`
+--
+
+CREATE TABLE `ms_user_accessviewtable` (
+  `id` int(11) NOT NULL,
+  `ms_menu_id` varchar(225) NOT NULL,
+  `ms_user_id` varchar(225) NOT NULL,
+  `access_view` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data untuk tabel `ms_user_accessviewtable`
+--
+
+INSERT INTO `ms_user_accessviewtable` (`id`, `ms_menu_id`, `ms_user_id`, `access_view`) VALUES
+(1, 'ee2b0c52-7164-4f56-9b8a-88ad291f59e7', '1', 'Customer ID,Name,Phone,Gender,Category,Date Of Birth,Email,Address,Allergies,Blood Type,Emergency Contact,Skin Type,Favorite Treatments,Note');
 
 --
 -- Indexes for dumped tables
@@ -84256,6 +84323,12 @@ ALTER TABLE `ms_kode_pos`
   ADD PRIMARY KEY (`kode`);
 
 --
+-- Indeks untuk tabel `ms_menus`
+--
+ALTER TABLE `ms_menus`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `ms_menu_group`
 --
 ALTER TABLE `ms_menu_group`
@@ -84287,6 +84360,12 @@ ALTER TABLE `ms_user_accesscontrols`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `ms_user_accessviewtable`
+--
+ALTER TABLE `ms_user_accessviewtable`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
@@ -84306,31 +84385,31 @@ ALTER TABLE `ms_company_profile`
 -- AUTO_INCREMENT untuk tabel `ms_create_table`
 --
 ALTER TABLE `ms_create_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT untuk tabel `ms_create_table_detail`
 --
 ALTER TABLE `ms_create_table_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT untuk tabel `ms_customer`
 --
 ALTER TABLE `ms_customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `ms_form`
 --
 ALTER TABLE `ms_form`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT untuk tabel `ms_form_fields`
 --
 ALTER TABLE `ms_form_fields`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=191;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=204;
 
 --
 -- AUTO_INCREMENT untuk tabel `ms_form_rawsql`
@@ -84361,6 +84440,12 @@ ALTER TABLE `ms_roles`
 --
 ALTER TABLE `ms_users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `ms_user_accessviewtable`
+--
+ALTER TABLE `ms_user_accessviewtable`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

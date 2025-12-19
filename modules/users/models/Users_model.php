@@ -166,104 +166,6 @@ class Users_model extends MY_Model
         }
     }
 
-    // public function getItems($id, $email)
-    // {
-    //     try {
-
-    //         $get = $this->get(array('id' => $id));
-    //         if (!$get) {
-    //             throw new Exception("Data not Register", 1);
-    //         }
-
-    //         if ($get->email == $email) {
-    //             throw new Exception("Sorry,you don't have permission to access", 1);
-    //         }
-
-    //         $role = $this->_getAccess()->get(array("{$this->_table_admins}_id" => $get->id));
-    //         if (!$role) {
-    //             throw new Exception("Role User not found", 1);
-    //         }
-
-    //         $select = $this->_getRole()->get_all(array('status' => 1));
-
-    //         $table = array(
-    //             'id' => $get->id,
-    //             'role_id' => $role->{$this->_table_admins_ms_roles . "_id"},
-    //             'fullname' => $get->fullname,
-    //             'email' => $get->email,
-    //             'checked' => $get->status == 1 ? 'enabled' : 'disabled',
-    //             'role' => $select,
-    //         );
-
-    //         return $table;
-    //     } catch (Exception $e) {
-    //         return $e->getMessage();
-    //     }
-    // }
-
-    // public function changeStatus($id)
-    // {
-    //     try {
-    //         if ($id == null) {
-    //             throw new Exception("Failed change status", 1);
-    //         }
-
-    //         $get = $this->get(array('id' => $id));
-    //         if (!$get) {
-    //             throw new Exception("Failed change status", 1);
-    //         }
-
-    //         if ($get->email == $this->_session_email) {
-    //             throw new Exception("Sorry,you don't have permission to change status this item", 1);
-    //         }
-
-    //         $status = $get->status == 1 ? 0 : 1;
-    //         $update = $this->update(array('id' => $id), array('status' => $status));
-    //         if (!$update) {
-    //             throw new Exception("Failed change status", 1);
-    //         }
-
-    //         return true;
-    //     } catch (Exception $e) {
-    //         return $e->getMessage();
-    //     }
-    // }
-
-    // public function deleteData($id)
-    // {
-    //     $this->db->trans_begin();
-    //     try {
-    //         if ($id == null) {
-    //             throw new Exception("Failed delete item", 1);
-    //         }
-
-    //         $get = $this->get(array('id' => $id));
-    //         if (!$get) {
-    //             throw new Exception("Failed delete item", 1);
-    //         }
-
-    //         if ($get->email == $this->_session_email) {
-    //             throw new Exception("Sorry,you don't have permission to delete this item", 1);
-    //         }
-
-    //         $access = $this->_getAccess()->delete(array("{$this->_tabel}_id" => $id));
-    //         if (!$access) {
-    //             throw new Exception("Failed delete Access Role Users", 1);
-    //         }
-
-    //         $softDelete = $this->softDelete($id);
-    //         if (!$softDelete) {
-    //             throw new Exception("Failed delete item", 1);
-    //         }
-
-    //         $this->db->trans_commit();
-    //         return true;
-    //     } catch (Exception $e) {
-    //         $this->db->trans_rollback();
-    //         return $e->getMessage();
-    //     }
-    // }
-
     public function createSession($username_email)
     {
         $response = [
@@ -311,6 +213,51 @@ class Users_model extends MY_Model
             $response['messages'] = 'success';
             return $response;
         } catch (Exception $e) {
+            return $response;
+        }
+    }
+
+    public function update_permission()
+    {
+        $this->db->trans_begin();
+        try {
+            $accessList = $this->input->post('access');
+
+            if (empty($accessList) || !is_array($accessList)) {
+                throw new Exception('Invalid access data');
+            }
+
+            foreach ($accessList as $row) {
+
+                $id = $row['id'];
+
+                $dataUpdate = [
+                    'view'    => (int) $row['view'],
+                    'insert'  => (int) $row['insert'],
+                    'update'  => (int) $row['update'],
+                    'delete'  => (int) $row['delete'],
+                    'export'  => (int) $row['export'],
+                    'import'  => (int) $row['import']
+                ];
+
+                $this->db->where('id', $id);
+                $execute = $this->db->update(
+                    $this->_table_ms_user_accesscontrols,
+                    $dataUpdate
+                );
+
+                if (!$execute) {
+                    throw new Exception('Failed update access id: ' . $id);
+                }
+            }
+
+            $this->db->trans_commit();
+            $response['success'] = true;
+            $response['validate'] = true;
+            $response['messages'] = 'Successfully Saved Data';
+            return $response;
+        } catch (Exception $e) {
+            $this->db->trans_rollback();
             return $response;
         }
     }

@@ -51542,7 +51542,7 @@ html:not([data-theme="dark"]) {
   border-spacing: 0;
   border: 1px solid #E4E6EF;
   border-radius: 10px;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .custom-table thead {

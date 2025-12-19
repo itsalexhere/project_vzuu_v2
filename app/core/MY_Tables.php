@@ -4,6 +4,7 @@ trait MY_Tables
 {
     public $_table_ms_users = 'ms_users';
     public $_table_ms_user_accesscontrols = 'ms_user_accesscontrols';
+    public $_table_ms_user_accessviewtable = 'ms_user_accessviewtable';
     public $_table_ms_menus = 'ms_menus';
     public $_table_ms_roles = 'ms_roles';
     public $_table_ms_branch = 'ms_branch';

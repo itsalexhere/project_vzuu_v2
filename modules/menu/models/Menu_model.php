@@ -86,25 +86,27 @@ class Menu_model extends MY_Model
 
     public function getUserMenuById($user_id)
     {
-        $this->db->select(" b.id,
+        $this->db->select(" b.id as id_access_control,
+	                        d.id as id_access_view,
                             a.name,
                             a.status,
+                            a.category,
                             b.view,
                             b.insert,
                             b.update,
                             b.delete,
                             b.import,
                             b.export,
-                            c.name AS parent_name
-                        ", false);
-
+                            c.name AS parent_name,
+                            d.access_view ", false);
         $this->db->from("{$this->_table_ms_menus} a");
         $this->db->join("{$this->_table_ms_user_accesscontrols} b", "b.ms_menus_id = a.id AND b.ms_user_id = {$user_id}", "inner");
-        $this->db->join("{$this->_table_ms_menus} c", "c.id = a.parent", "inner");
+        $this->db->join("{$this->_table_ms_menus} c", "c.id = a.parent", "left");
+        $this->db->join("{$this->_table_ms_user_accessviewtable} d", "d.ms_menu_id = a.id", "left");
 
         $this->db->where("b.id IS NOT NULL", null, false);
         $this->db->where("a.name !=", "Beranda");
-        $this->db->where("(a.parent IS NOT NULL AND a.parent != '' AND a.parent != '0')", null, false);
+        // $this->db->where("(a.parent IS NOT NULL AND a.parent != '' AND a.parent != '0')", null, false);
 
         $result = $this->db->get()->result();
 
