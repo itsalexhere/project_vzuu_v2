@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Waktu pembuatan: 19 Des 2025 pada 07.32
--- Versi server: 5.7.17-log
--- Versi PHP: 8.1.10
+-- Host: localhost
+-- Waktu pembuatan: 21 Des 2025 pada 02.42
+-- Versi server: 10.4.27-MariaDB
+-- Versi PHP: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `project_vzuu`
+-- Database: `vzuu_v2`
 --
 
 -- --------------------------------------------------------
@@ -33,12 +33,12 @@ CREATE TABLE `ms_branch` (
   `address` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `created_by` varchar(25) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_by` varchar(25) DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_by` varchar(25) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -51,12 +51,12 @@ CREATE TABLE `ms_company_profile` (
   `name` varchar(255) DEFAULT NULL,
   `image_path` varchar(255) DEFAULT NULL,
   `created_by` varchar(25) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_by` varchar(25) DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_by` varchar(25) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `ms_company_profile`
@@ -76,8 +76,8 @@ CREATE TABLE `ms_create_table` (
   `name` varchar(225) NOT NULL,
   `description` varchar(225) NOT NULL,
   `created_by` varchar(25) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data untuk tabel `ms_create_table`
@@ -101,7 +101,7 @@ CREATE TABLE `ms_create_table_detail` (
   `type_table` varchar(50) NOT NULL,
   `length_table` int(11) NOT NULL,
   `default_table` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data untuk tabel `ms_create_table_detail`
@@ -148,12 +148,12 @@ CREATE TABLE `ms_customer` (
   `favorite_treatments` varchar(255) DEFAULT NULL,
   `note` varchar(255) DEFAULT NULL,
   `created_by` varchar(25) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_by` varchar(25) DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_by` varchar(25) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `ms_customer`
@@ -179,10 +179,10 @@ CREATE TABLE `ms_form` (
   `description` text NOT NULL,
   `status` varchar(25) NOT NULL,
   `created_by` varchar(100) NOT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_by` varchar(100) NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data untuk tabel `ms_form`
@@ -211,10 +211,10 @@ CREATE TABLE `ms_form_fields` (
   `ordering` int(11) NOT NULL,
   `status` varchar(225) NOT NULL,
   `created_by` varchar(225) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_by` varchar(225) NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data untuk tabel `ms_form_fields`
@@ -249,7 +249,7 @@ CREATE TABLE `ms_form_rawsql` (
   `id` int(11) NOT NULL,
   `form_id` varchar(255) NOT NULL,
   `sql` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -260,7 +260,7 @@ CREATE TABLE `ms_form_rawsql` (
 CREATE TABLE `ms_kode_pos` (
   `kode` varchar(13) NOT NULL,
   `kodepos` varchar(5) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `ms_kode_pos`
@@ -84090,22 +84090,21 @@ CREATE TABLE `ms_menus` (
   `order` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   `created_by` varchar(100) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_by` varchar(100) DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `deleted_by` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `ms_menus`
 --
 
 INSERT INTO `ms_menus` (`id`, `category`, `controller`, `name`, `icon`, `parent`, `order`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`, `deleted_at`, `deleted_by`) VALUES
-('072f13f5-b029-47c7-abe1-3c4a1c05cbc8', 'database', 'roles', 'Roles', '', '63c3fb94-7527-11f0-870d-d61f882f8b66', 7, 1, '1', '2025-12-10 02:22:54', NULL, NULL, NULL, NULL),
+('072f13f5-b029-47c7-abe1-3c4a1c05cbc8', 'settings', 'roles', 'Roles', 'bi bi-award', '0', 20, 1, '1', '2025-12-10 02:22:54', '1', '2025-12-19 07:43:29', NULL, NULL),
 ('63c3ed2a-7527-11f0-870d-d61f882f8b66', NULL, 'dashboard', 'Beranda', 'fonticon-house', '0', 6, 1, 'SYSTEM', '2023-11-03 16:10:14', '1', '2025-08-10 21:01:15', NULL, NULL),
-('63c3fb94-7527-11f0-870d-d61f882f8b66', 'database', 'master', 'Master', 'bi bi-database-gear', '0', 1, 1, 'SYSTEM', '2024-01-06 10:52:25', '1', '2025-11-16 19:43:56', NULL, NULL),
-('63c3fd88-7527-11f0-870d-d61f882f8b66', 'database', 'menu', 'Menu', 'none', '63c3fb94-7527-11f0-870d-d61f882f8b66', 2, 1, 'SYSTEM', '2024-02-13 05:40:36', '1', '2025-08-09 08:49:28', NULL, NULL),
+('63c3fd88-7527-11f0-870d-d61f882f8b66', 'settings', 'menu', 'Menu', 'bi bi-menu-app', '0', 19, 1, 'SYSTEM', '2024-02-13 05:40:36', '1', '2025-12-19 07:40:46', NULL, NULL),
 ('63c3ff0e-7527-11f0-870d-d61f882f8b66', 'user', 'users', 'User Role', 'bi bi-person-gear', '0', 18, 1, 'SYSTEM', '2024-01-24 01:46:15', '1', '2025-12-17 21:20:54', '2025-11-28 00:39:47', '1'),
 ('6922a4ee-dbe8-46ff-a0a7-1a4cbb090d84', 'settings', 'company_profile', 'Default', 'bi bi-gear', '0', 15, 1, 'SYSTEM', '2025-12-05 08:24:31', '1', '2025-12-17 21:19:27', NULL, NULL),
 ('9c1a5ec7-5233-4e64-8fc5-48fdd8e1c6de', 'database', 'treatment', 'Treatment', 'bi bi-clipboard2-pulse', '0', 11, 1, 'SYSTEM', '2025-11-17 00:52:46', NULL, NULL, NULL, NULL),
@@ -84113,6 +84112,25 @@ INSERT INTO `ms_menus` (`id`, `category`, `controller`, `name`, `icon`, `parent`
 ('ea84f584-4a65-45c5-8687-d4ce7d133674', NULL, 'notifications', 'Notifications', 'bi bi-bell', '0', 10, 1, 'SYSTEM', '2025-12-15 07:48:43', NULL, NULL, NULL, NULL),
 ('ee2b0c52-7164-4f56-9b8a-88ad291f59e7', 'database', 'customer', 'Customer', 'bi bi-person-check', '0', 9, 1, 'SYSTEM', '2025-12-15 02:13:24', NULL, NULL, NULL, NULL),
 ('fbaa32be-5c32-439f-a864-0c22d00230a4', 'database', 'gen_form', 'Form', 'none', '2426ac08-7e98-4439-9621-ed67c59c698c', 3, 0, 'SYSTEM', '2025-11-17 00:52:46', '1', '2025-12-06 04:37:22', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `ms_menus_table_views`
+--
+
+CREATE TABLE `ms_menus_table_views` (
+  `id` int(11) NOT NULL,
+  `ms_menus_id` varchar(36) DEFAULT NULL,
+  `fields` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `ms_menus_table_views`
+--
+
+INSERT INTO `ms_menus_table_views` (`id`, `ms_menus_id`, `fields`) VALUES
+(1, 'ee2b0c52-7164-4f56-9b8a-88ad291f59e7', 'Customer ID,Name,Phone,Gender,Category,Date Of Birth,Email,Address,Allergies,Blood Type,Emergency Contact,Skin Type,Favorite Treatments,Note');
 
 -- --------------------------------------------------------
 
@@ -84125,12 +84143,12 @@ CREATE TABLE `ms_menu_group` (
   `nama` varchar(100) NOT NULL,
   `status` int(11) NOT NULL,
   `created_by` varchar(100) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_by` varchar(100) DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_by` varchar(100) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -84143,7 +84161,7 @@ CREATE TABLE `ms_menu_group_detail` (
   `ms_menu_group_id` varchar(100) NOT NULL,
   `ms_menus_id` varchar(100) NOT NULL,
   `status` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -84155,12 +84173,12 @@ CREATE TABLE `ms_roles` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `created_by` varchar(25) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_by` varchar(25) DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_by` varchar(25) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `ms_roles`
@@ -84180,17 +84198,17 @@ INSERT INTO `ms_roles` (`id`, `name`, `created_by`, `created_at`, `updated_by`, 
 
 CREATE TABLE `ms_users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role_id` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ketika pertama kali di create terisi oleh string password, ketika login di update ke generate session_id',
-  `notes` text COLLATE utf8mb4_unicode_ci,
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 = non active, 1 = active',
-  `created_by` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_by` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `username` varchar(255) NOT NULL,
+  `role_id` varchar(5) DEFAULT NULL,
+  `email` varchar(150) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `remember_token` varchar(255) NOT NULL COMMENT 'ketika pertama kali di create terisi oleh string password, ketika login di update ke generate session_id',
+  `notes` text DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '0 = non active, 1 = active',
+  `created_by` varchar(150) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_by` varchar(150) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `active_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -84199,7 +84217,7 @@ CREATE TABLE `ms_users` (
 --
 
 INSERT INTO `ms_users` (`id`, `username`, `role_id`, `email`, `password`, `remember_token`, `notes`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`, `active_at`) VALUES
-(1, 'superadmin', NULL, 'superadmin@gmail.com', '$2y$10$h0hdCw1g1yTlFto/53pYc.BvFL9YqDiEYu1mSwc.cqC26/fEUexBm', 'LgHfiEJm3vxGSV6908jWNKqZPe2Dpua1BYRhtQ7sXA5ClFycOnU4rzTokIwbdM', NULL, 1, 'SYSTEM', '2023-11-03 16:10:14', '', '2025-12-19 01:08:56', '2025-12-11 02:22:41');
+(1, 'superadmin', NULL, 'superadmin@gmail.com', '$2y$10$h0hdCw1g1yTlFto/53pYc.BvFL9YqDiEYu1mSwc.cqC26/fEUexBm', '7Y21EPAmVzhCr6ixGZvnaUMdjewgFlByocQ0fXDqSHIWuRbtp4O5s9LJ3KTN8k', NULL, 1, 'SYSTEM', '2023-11-03 16:10:14', '', '2025-12-21 01:32:07', '2025-12-11 02:22:41');
 
 -- --------------------------------------------------------
 
@@ -84211,15 +84229,15 @@ CREATE TABLE `ms_user_accesscontrols` (
   `id` char(36) NOT NULL,
   `ms_menus_id` varchar(100) NOT NULL,
   `ms_user_id` varchar(100) NOT NULL,
-  `view` tinyint(1) DEFAULT '0',
-  `insert` tinyint(1) DEFAULT '0',
-  `update` tinyint(1) DEFAULT '0',
-  `delete` tinyint(1) DEFAULT '0',
-  `import` tinyint(1) DEFAULT '0',
-  `export` tinyint(1) DEFAULT '0',
+  `view` tinyint(1) DEFAULT 0,
+  `insert` tinyint(1) DEFAULT 0,
+  `update` tinyint(1) DEFAULT 0,
+  `delete` tinyint(1) DEFAULT 0,
+  `import` tinyint(1) DEFAULT 0,
+  `export` tinyint(1) DEFAULT 0,
   `created_by` varchar(100) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `ms_user_accesscontrols`
@@ -84255,14 +84273,23 @@ CREATE TABLE `ms_user_accessviewtable` (
   `ms_menu_id` varchar(225) NOT NULL,
   `ms_user_id` varchar(225) NOT NULL,
   `access_view` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data untuk tabel `ms_user_accessviewtable`
 --
 
 INSERT INTO `ms_user_accessviewtable` (`id`, `ms_menu_id`, `ms_user_id`, `access_view`) VALUES
-(1, 'ee2b0c52-7164-4f56-9b8a-88ad291f59e7', '1', 'Customer ID,Name,Phone,Gender,Category,Date Of Birth,Email,Address,Allergies,Blood Type,Emergency Contact,Skin Type,Favorite Treatments,Note');
+(1, 'ee2b0c52-7164-4f56-9b8a-88ad291f59e7', '1', 'Name,Phone,Gender,Date Of Birth,Email,Address,Allergies,Emergency Contact,Skin Type,Favorite Treatments,Note'),
+(2, '072f13f5-b029-47c7-abe1-3c4a1c05cbc8', '1', ''),
+(3, 'ea84f584-4a65-45c5-8687-d4ce7d133674', '1', ''),
+(4, '63c3fb94-7527-11f0-870d-d61f882f8b66', '1', ''),
+(5, '63c3fd88-7527-11f0-870d-d61f882f8b66', '1', ''),
+(6, '63c3ff0e-7527-11f0-870d-d61f882f8b66', '1', ''),
+(7, 'fbaa32be-5c32-439f-a864-0c22d00230a4', '1', ''),
+(8, '6922a4ee-dbe8-46ff-a0a7-1a4cbb090d84', '1', ''),
+(9, 'cb0c3254-208b-4076-aa97-a0e847da5e2f', '1', ''),
+(10, '9c1a5ec7-5233-4e64-8fc5-48fdd8e1c6de', '1', '');
 
 --
 -- Indexes for dumped tables
@@ -84326,6 +84353,12 @@ ALTER TABLE `ms_kode_pos`
 -- Indeks untuk tabel `ms_menus`
 --
 ALTER TABLE `ms_menus`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `ms_menus_table_views`
+--
+ALTER TABLE `ms_menus_table_views`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -84418,6 +84451,12 @@ ALTER TABLE `ms_form_rawsql`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT untuk tabel `ms_menus_table_views`
+--
+ALTER TABLE `ms_menus_table_views`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT untuk tabel `ms_menu_group`
 --
 ALTER TABLE `ms_menu_group`
@@ -84445,7 +84484,7 @@ ALTER TABLE `ms_users`
 -- AUTO_INCREMENT untuk tabel `ms_user_accessviewtable`
 --
 ALTER TABLE `ms_user_accessviewtable`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
