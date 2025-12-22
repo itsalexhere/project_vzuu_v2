@@ -1,18 +1,32 @@
 var fontFamily = KTUtil.getCssVariableValue("--bs-font-sans-serif");
 
 // Chart labels
-const labels = ["8/8", "9/8", "10/8", "11/8", "12/8"];
+const labels1 = ["2021", "2022", "2023", "2024", "2025"];
+const labels = ["2021", "2022", "2023", "2024", "2025"];
 
 // Chart data
 const data = {
+  labels: labels1,
+  datasets: [
+    {
+      label: "My Dataset",
+      backgroundColor: "pink",
+      borderColor: "pink",
+      data: [40, 60, 55, 56, 120], 
+      fill: false, 
+    },
+  ],
+};
+
+const data12 = {
   labels: labels,
   datasets: [
     {
       label: "My Dataset",
       backgroundColor: "pink",
       borderColor: "pink",
-      data: [0, 20, 50, 100, 150], // y-axis data values
-      fill: false, // no fill under the line
+      data: [20, 10, 55, 56, 190], 
+      fill: false, 
     },
   ],
 };
@@ -54,7 +68,7 @@ const config = {
 
 const config2 = {
   type: "bar",
-  data: data,
+  data: data12,
   options: {
     plugins: {
       title: {
@@ -94,7 +108,6 @@ const data2 = {
   labels: labels2,
   datasets: [
     {
-      label: "Sessions by Device Type",
       data: [80, 20],
       backgroundColor: colors,
       borderColor: colors,
@@ -108,11 +121,31 @@ const dounut1 = {
   type: "doughnut",
   data: data2,
   options: {
-    cutout: "70%", 
+    cutout: "80%",
+    responsive: true,
     plugins: {
+
+      // 🔥 INI YANG PENTING
+      datalabels: {
+        color: "#fff",
+        font: {
+          weight: "bold",
+          size: 12,
+          family: fontFamily,
+        },
+        anchor: "center",
+        align: "center",
+        clamp: true,
+        formatter: (value, ctx) => {
+          const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+          const percent = (value / total) * 100;
+          return percent < 5 ? "" : percent.toFixed(0) + "%";
+        }
+
+      },
+
       title: {
         display: true,
-        text: "Sessions by Device Type",
         padding: {
           top: 10,
           bottom: 30,
@@ -123,6 +156,7 @@ const dounut1 = {
           family: fontFamily,
         },
       },
+
       legend: {
         display: true,
         position: "right",
@@ -139,12 +173,6 @@ const dounut1 = {
         },
       },
     },
-    responsive: true,
-  },
-  defaults: {
-    global: {
-      defaultFont: fontFamily,
-    },
   },
 };
 
@@ -155,7 +183,6 @@ const data3 = {
   labels: labels3,
   datasets: [
     {
-      label: "Sessions by Device Type",
       data: [40, 50,10],
       backgroundColor: colorLables1,
       borderColor: colorLables1,
@@ -173,7 +200,6 @@ const dounut2 = {
     plugins: {
       title: {
         display: true,
-        text: "Sessions by Device Type",
         padding: {
           top: 10,
           bottom: 30,
@@ -215,7 +241,6 @@ const data4 = {
   labels: labels4,
   datasets: [
     {
-      label: "Sessions by Device Type",
        data: [30, 30,40],
       backgroundColor: colorLables1,
       borderColor: colorLables1,
@@ -233,7 +258,6 @@ const dounut3 = {
     plugins: {
       title: {
         display: true,
-        text: "Sessions by Device Type",
         padding: {
           top: 10,
           bottom: 30,

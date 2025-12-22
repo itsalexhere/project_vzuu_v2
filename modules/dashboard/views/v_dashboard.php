@@ -11,222 +11,141 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 Filter
             </button>
 
-            <div class="row gx-5 gx-xl-10">
-                <div class="row">
-                    <div class="col-md-6 col-xl-4 mb-5">
-                        <div class="card card-flush h-100">
+            <div class="row">
+                <?php
+                $total_cards = count($cards);
 
-                            <div class="card-header pt-5">
-                                <div class="card-title d-flex flex-column">
-                                    <span class="fs-2hx fw-bold text-gray-900 lh-1">357</span>
-                                    <span class="text-gray-500 pt-1 fw-semibold fs-6">Professionals</span>
-                                </div>
-                            </div>
+                $col_xl = 12 / $total_cards;
 
-                            <div class="card-body d-flex flex-column justify-content-end">
-                                <span class="fs-6 fw-bolder text-gray-800 mb-2">Today’s Heroes</span>
+                $col_xl = floor($col_xl);
 
-                                <div class="symbol-group symbol-hover flex-nowrap">
-                                    <!-- avatars tetap sama -->
-                                    <!-- ... -->
-                                </div>
-                            </div>
+                // minimal col 3
+                if ($col_xl < 3) {
+                    $col_xl = 3;
+                }
 
-                        </div>
+                foreach ($cards as $card): ?>
+                    <div class="col-md-6 col-xl-<?= $col_xl ?> mb-5">
+
+                        <?= $this->load->view(
+                            PATH_COMPONENTS . 'dashboard/card',
+                            [
+                                'label_card' => $card['label_card'],
+                                'value_card' => $card['value_card']
+                            ],
+                            true
+                        ); ?>
+
                     </div>
-
-                    <div class="col-md-6 col-xl-4 mb-5">
-                        <div class="card card-flush h-100">
-
-                            <div class="card-header pt-5">
-                                <div class="card-title d-flex flex-column">
-                                    <span class="fs-2hx fw-bold text-gray-900 lh-1">357</span>
-                                    <span class="text-gray-500 pt-1 fw-semibold fs-6">Professionals</span>
-                                </div>
-                            </div>
-
-                            <div class="card-body d-flex flex-column justify-content-end">
-                                <span class="fs-6 fw-bolder text-gray-800 mb-2">Today’s Heroes</span>
-
-                                <div class="symbol-group symbol-hover flex-nowrap">
-                                    <!-- avatars tetap sama -->
-                                    <!-- ... -->
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-xl-4 mb-5">
-                        <div class="card card-flush h-100">
-
-                            <div class="card-header pt-5">
-                                <div class="card-title d-flex flex-column">
-                                    <span class="fs-2hx fw-bold text-gray-900 lh-1">357</span>
-                                    <span class="text-gray-500 pt-1 fw-semibold fs-6">Professionals</span>
-                                </div>
-                            </div>
-
-                            <div class="card-body d-flex flex-column justify-content-end">
-                                <span class="fs-6 fw-bolder text-gray-800 mb-2">Today’s Heroes</span>
-
-                                <div class="symbol-group symbol-hover flex-nowrap">
-                                    <!-- avatars tetap sama -->
-                                    <!-- ... -->
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
+                <?php endforeach; ?>
             </div>
 
-            <div class="row gx-5 gx-xl-10">
-                <div class="row">
-                    <div class="col-md-6 col-xl-6 mb-5">
-                        <div class="card card-flush h-md-100">
+            <div class="row">
+                <?php
+                $total_cards = count($card_lines);
 
-                            <div class="card-header pt-5 mb-6">
-                                <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label" style="color: grey;">Total Sales</span>
-                                </h3>
-                            </div>
+                $col_xl = 12 / $total_cards;
 
-                            <div class="card-body">
+                $col_xl = floor($col_xl);
 
-                                <div class="card-body d-flex justify-content-between flex-column pb-1 px-0">
-                                    <div class="d-flex mb-2">
-                                        <span class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2">Rp 30,000,000,00</span>
-                                    </div>
-                                    <span class="fs-6 fw-semibold text-gray-400">Another $48,346 to Goal</span>
+                // minimal col 3
+                if ($col_xl < 3) {
+                    $col_xl = 3;
+                }
 
-                                    <canvas id="kt_chartjs_2" class="mh-400px mt-6"></canvas>
-                                </div>
-                            </div>
-                            <!--end::Body-->
-                        </div>
+                foreach ($card_lines as $card): ?>
+                    <div class="col-md-6 col-xl-<?= $col_xl ?> mb-5">
+
+                        <?= $this->load->view(
+                            PATH_COMPONENTS . 'dashboard/card_line_chart',
+                            [
+                                'label_card_line' => $card['label_card_line'],
+                                'id_chart' => $card['id_chart'],
+                                'value_card_line' => $card['value_card_line'],
+                                'value_percentage_card_line' => $card['value_percentage_card_line'],
+                                'type_card_line' => $card['type_card_line']
+                            ],
+                            true
+                        ); ?>
+
                     </div>
+                <?php endforeach; ?>
+            </div>
 
-                    <div class="col-md-6 col-xl-6 mb-5">
-                        <div class="card card-flush h-md-100">
+            <div class="row">
+                <?php
+                $total_cards = count($card_pies);
 
-                            <div class="card-header pt-5 mb-6">
-                                <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label" style="color: grey;">Total Sales</span>
-                                </h3>
-                            </div>
+                $col_xl = 12 / $total_cards;
 
-                            <div class="card-body">
+                $col_xl = floor($col_xl);
 
-                                <div class="card-body d-flex justify-content-between flex-column pb-1 px-0">
-                                    <div class="d-flex mb-2">
-                                        <span class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2">Rp 30,000,000,00</span>
-                                    </div>
-                                    <span class="fs-6 fw-semibold text-gray-400">Another $48,346 to Goal</span>
+                // minimal col 3
+                if ($col_xl < 3) {
+                    $col_xl = 3;
+                }
 
-                                    <canvas id="kt_chartjs_3" class="mh-400px mt-6"></canvas>
-                                </div>
-                            </div>
-                            <!--end::Body-->
+                foreach ($card_pies as $card): ?>
+                    <div class="col-md-6 col-xl-<?= $col_xl ?> mb-5">
+
+                        <?= $this->load->view(
+                            PATH_COMPONENTS . 'dashboard/card_pie_chart',
+                            [
+                                'label_card_line' => $card['label_card_line'],
+                                'id_chart' => $card['id_chart'],
+                                'value_card_line' => $card['value_card_line'],
+                                'value_percentage_card_line' => $card['value_percentage_card_line'],
+                                'type_card_line' => $card['type_card_line']
+                            ],
+                            true
+                        ); ?>
+
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-xl-4 mb-5">
+                    <div class="card card-flush h-md-100">
+
+                        <div class="card-header pt-5 mb-6">
+                            <h3 class="card-title align-items-start flex-column">
+                                <span class="card-label" style="color: grey;">Top Selling Treatment</span>
+                            </h3>
+                        </div>
+
+                        <div class="card-body d-flex justify-content-between flex-column pb-1">
+                            <canvas id="kt_chartjs_barright" class="mh-400px mt-6"></canvas>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row gx-5 gx-xl-10">
-                <div class="row">
-                    <div class="col-md-6 col-xl-4 mb-5">
-                        <div class="card card-flush h-md-100">
+                <div class="col-md-6 col-xl-4 mb-5">
+                    <div class="card card-flush h-md-100">
 
-                            <div class="card-header pt-5 mb-6">
-                                <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label" style="color: grey;">Customer Gender Distribution</span>
-                                </h3>
-                            </div>
-
-                            <div class="card-body d-flex justify-content-between flex-column pb-1">
-                                <canvas id="kt_chartjs_donut1" class="mh-400px mt-6"></canvas>
-                            </div>
+                        <div class="card-header pt-5 mb-6">
+                            <h3 class="card-title align-items-start flex-column">
+                                <span class="card-label" style="color: grey;">Top Spender</span>
+                            </h3>
                         </div>
-                    </div>
 
-                    <div class="col-md-6 col-xl-4 mb-5">
-                        <div class="card card-flush h-md-100">
-
-                            <div class="card-header pt-5 mb-6">
-                                <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label" style="color: grey;">Customer Age Distribution</span>
-                                </h3>
-                            </div>
-
-                            <div class="card-body d-flex justify-content-between flex-column pb-1">
-                                <canvas id="kt_chartjs_donut2" class="mh-400px mt-6"></canvas>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-xl-4 mb-5">
-                        <div class="card card-flush h-md-100">
-
-                            <div class="card-header pt-5 mb-6">
-                                <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label" style="color: grey;">Customer Segmentation</span>
-                                </h3>
-                            </div>
-
-                            <div class="card-body d-flex justify-content-between flex-column pb-1">
-                                <canvas id="kt_chartjs_donut3" class="mh-400px mt-6"></canvas>
-                            </div>
+                        <div class="card-body d-flex justify-content-between flex-column pb-1">
+                            <canvas id="kt_chartjs_donut2" class="mh-400px mt-6"></canvas>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row gx-5 gx-xl-10">
-                <div class="row">
-                    <div class="col-md-6 col-xl-4 mb-5">
-                        <div class="card card-flush h-md-100">
+                <div class="col-md-6 col-xl-4 mb-5">
+                    <div class="card card-flush h-md-100">
 
-                            <div class="card-header pt-5 mb-6">
-                                <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label" style="color: grey;">Top Selling Treatment</span>
-                                </h3>
-                            </div>
-
-                            <div class="card-body d-flex justify-content-between flex-column pb-1">
-                                <canvas id="kt_chartjs_barright" class="mh-400px mt-6"></canvas>
-                            </div>
+                        <div class="card-header pt-5 mb-6">
+                            <h3 class="card-title align-items-start flex-column">
+                                <span class="card-label" style="color: grey;">Customer BirthDay</span>
+                            </h3>
                         </div>
-                    </div>
 
-                    <div class="col-md-6 col-xl-4 mb-5">
-                        <div class="card card-flush h-md-100">
-
-                            <div class="card-header pt-5 mb-6">
-                                <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label" style="color: grey;">Top Spender</span>
-                                </h3>
-                            </div>
-
-                            <div class="card-body d-flex justify-content-between flex-column pb-1">
-                                <canvas id="kt_chartjs_donut2" class="mh-400px mt-6"></canvas>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-xl-4 mb-5">
-                        <div class="card card-flush h-md-100">
-
-                            <div class="card-header pt-5 mb-6">
-                                <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label" style="color: grey;">Customer BirthDay</span>
-                                </h3>
-                            </div>
-
-                            <div class="card-body d-flex justify-content-between flex-column pb-1">
-                                <canvas id="kt_chartjs_donut3" class="mh-400px mt-6"></canvas>
-                            </div>
+                        <div class="card-body d-flex justify-content-between flex-column pb-1">
+                            <canvas id="kt_chartjs_donut3" class="mh-400px mt-6"></canvas>
                         </div>
                     </div>
                 </div>

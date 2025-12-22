@@ -1,41 +1,60 @@
 $(document).ready(function () {
     var url = base_url() + "customer/show";
 
-    var columns = 
-    [
-        {
-            data: null,
-            render: function (data, type, row, meta) {
-                return meta.row + meta.settings._iDisplayStart + 1;
-            },
-        },
-        {data: "name",
-          render: function (data, type, row) {
-            const urlpath =base_url() + `customer/update/${row.id}`;
+    let columns = [];
 
-            return `
-              <a class="btn-detail"
-                data-url="${urlpath}"
-                data-id="${row.id}"
-                style="text-decoration: underline; cursor:pointer;">
-                ${data}
-              </a>
-            `;
-          },
-        },
-        { data: "phone" },
-        { data: "gender" },
-        { data: "category" },
-        { data: "date_of_birth" },
-        { data: "email" },
-        { data: "address" },
-        { data: "allergies" },
-        { data: "blood_type" },
-        { data: "emergency_contact" },
-        { data: "skin_type" },
-        { data: "favorite_treatments" },
-        { data: "note" }
-    ];
+    $.ajax({
+      url: base_url() + "customer/table_fields",
+      method: "POST",
+      dataType: "json",
+      async: false,
+      data: {
+        _token: getCookie(),
+      },
+      success: function (response) {
+
+        const accessViewString = response?.data?.access_view;        
+
+        if (!accessViewString) {
+          console.error('access_view tidak ditemukan', response);
+          return;
+        }
+
+        const accessView = accessViewString.split(',').map(v => v.trim());
+
+        // columns.push({
+        //   data: null,
+        //   render: function (data, type, row, meta) {
+        //     return meta.row + meta.settings._iDisplayStart + 1;
+        //   }
+        // });
+
+        accessView.forEach(label => {
+          const convert_label =  label.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, '_');
+
+          if (convert_label === 'name') {
+            columns.push({
+              data: "name",
+              render: function (data, type, row) {
+                const urlpath = base_url() + `customer/update/${row.id}`;
+                return `
+                  <a class="btn-detail"
+                    data-url="${urlpath}"
+                    data-id="${row.id}"
+                    style="text-decoration: underline; cursor:pointer;">
+                    ${data}
+                  </a>
+                `;
+              }
+            });
+          } else {
+            columns.push({
+              data: convert_label
+            });
+          }
+        });
+      }
+    });
 
     gridDatatables(url, columns);
 });

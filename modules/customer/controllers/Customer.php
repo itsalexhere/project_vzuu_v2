@@ -7,15 +7,17 @@ class Customer extends MY_Owner
     protected $path;
     private $access;
     private $url_form;
+    private $table_fields;
 
     public function __construct()
     {
-        $this->_function_except = ['show','process', 'side'];
+        $this->_function_except = ['show','process', 'side', 'table_fields'];
         parent::__construct();
         $this->path = "customer";
         $this->title = ucfirst($this->path);
         $this->access = $this->getCurrentMenuPermissions();
         $this->url_form = base_url() . $this->path . "/process";
+        $this->table_fields = $this->customer_model->table_fields();
     }
 
     public function index()
@@ -24,27 +26,19 @@ class Customer extends MY_Owner
         $this->assetsBuild(['datatables']);
         $this->setJs($this->path);
 
+        
+        $get_fields = json_decode($this->table_fields, true)['data']['access_view'];
+        $columns = array_map(
+            'trim',
+            explode(',', $get_fields)
+        );
+
         $data=[
             'tables' => $this->load->view(
                 PATH_COMPONENTS . 'tables/v_table_round',
                 [
                     'id'      => 'table-data',
-                    'columns' => [
-                        'Customer ID',
-                        'Name',
-                        'Phone',
-                        'Gender',
-                        'Category',
-                        'Date Of Birth',
-                        'Email',
-                        'Address',
-                        'Allergies',
-                        'Blood Type',
-                        'Emergency Contact',
-                        'Skin Type',
-                        'Favorite Treatments',
-                        'Note'
-                    ],
+                    'columns' => $columns,
                 ],
                 true
             ),
@@ -75,18 +69,22 @@ class Customer extends MY_Owner
         echo $this->customer_model->show();
     }
 
+    public function table_fields()
+    {
+        isAjaxRequestWithPost();
+        $this->function_access('view');
+
+        echo $this->customer_model->table_fields();
+    }
+
     public function insert()
     {
         isAjaxRequestWithPost();
 
-        $set_data = [
-            'form_fields_html' => $this->customer_model->list_fields(),
-        ];
-
         $data = [
             'title_modal' => 'New ' . ucfirst($this->title),
             'url_form' => $this->url_form,
-            'form' => $this->load->view('v_form', $set_data, true),
+            'form' => $this->load->view('v_form', "", true),
         ];
 
         $html = $this->load->view($this->_v_form_modal, $data, true);

@@ -391,11 +391,15 @@ if (!function_exists('renderMenuSection')) {
 	}
 }
 
-function input_borderless(array $params = [])
+if (!function_exists('input_borderless')) 
 {
-	return get_instance()->load->view(
-		PATH_COMPONENTS . 'input/input_borderless',
-		$params,
-		true
-	);
+	function input_borderless(array $params = [])
+	{
+		return get_instance()->load->view(
+			PATH_COMPONENTS . 'input/input_borderless',
+			$params,
+			true
+		);
+	}
 }
+

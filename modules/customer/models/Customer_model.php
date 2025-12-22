@@ -28,23 +28,18 @@ class Customer_model extends MY_Model
         ];
     }
 
-    public function list_fields()
+    public function table_fields()
     {
-        $this->db->select('
-            b.field_name,
-            b.field_type,
-            b.placeholder,
-            b.column_type,
-            b.is_required,
-            b.status,
-            b.ordering
-        ');
-        $this->db->from("{$this->_table_ms_form} a");
-        $this->db->join("{$this->_table_ms_form_fields} b", 'b.form_id = a.id', 'left');
-        $this->db->where('a.id', '82');
-        $this->db->order_by('b.ordering', 'ASC');
+        $result = $this->db
+            ->select('a.access_view')
+            ->from("{$this->_table_ms_user_accessviewtable} a")
+            ->join("{$this->_table_ms_menus} b", 'b.id = a.ms_menu_id')
+            ->where('b.controller', isControllerExist() ?? "")
+            ->where('a.ms_user_id', $this->_user_id ?? 0)
+            ->get()
+            ->row_array();
 
-        return $this->db->get()->result_array();
+        return json_encode(['data' => $result]);
     }
 
     public function show()
