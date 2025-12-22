@@ -6,52 +6,78 @@ class Treatment extends MY_Owner
     protected $title;
     protected $path;
     private $access;
+    private $url_form;
+    private $table_fields;
 
     public function __construct()
     {
-        $this->_function_except = ['show','process', 'side'];
+        $this->_function_except = ['show','process', 'side', 'table_fields'];
         parent::__construct();
-        $this->title = "Treatment";
         $this->path = "treatment";
+        $this->title = ucfirst($this->path);
         $this->access = $this->getCurrentMenuPermissions();
+        $this->url_form = base_url() . $this->path . "/process";
+        $this->table_fields = $this->treatment_model->table_fields();
     }
 
     public function index()
     {
         $this->template->title(ucfirst($this->title));
         $this->assetsBuild(['datatables']);
-        $this->setJs("treatment");
+        $this->setJs($this->path);
 
-        $headerTable = [
-            'no',
-            'Name',
-            'Phone',
-            'Gender',
-            'Category',
-            'Date Of Birth',
-            'Email',
-            'Address',
-            'Allergies',
-            'Blood Type',
-            'Emergency Contact',
-            'Skin Type',
-            'Favorite Treatments',
-            'Note',
-            'Action'
-        ];
+        
+        $get_fields = json_decode($this->table_fields, true)['data']['access_view'];
+        $columns = array_map(
+            'trim',
+            explode(',', $get_fields)
+        );
 
-        $data=[
-            'tables' => generateTableHtml($headerTable),
+        $right_button = [];
+
+        if ($this->access['insert']) {
+            $right_button[] = $this->load->view(PATH_COMPONENTS . 'buttons/add', [
+                "url"   => $this->path . "/insert",
+                "label" => "Add " . $this->title
+            ], true);
+        }
+
+        if ($this->access['export']) {
+            $right_button[] = $this->load->view(PATH_COMPONENTS . 'buttons/export', [
+                "url" => $this->path . "/side"
+            ], true);
+        }
+
+        if ($this->access['import']) {
+            $right_button[] = $this->load->view(PATH_COMPONENTS . 'buttons/import', [
+                "url" => $this->path . "/side"
+            ], true);
+        }
+
+        $data = [
+            'tables' => $this->load->view(
+                PATH_COMPONENTS . 'tables/v_table_round',
+                [
+                    'id'      => 'table-data',
+                    'columns' => $columns,
+                ],
+                true
+            ),
             'c_views_header' => $this->load->view(PATH_COMPONENTS . 'views/v_header', [
-                'titlePage' => ucfirst($this->title),
+                'titlePage'  => $this->title,
                 'parentMenu' => "Master"
             ], true),
             'c_input_search' => $this->load->view(PATH_COMPONENTS . 'input/search', "", true),
-            'c_btn_filter' => $this->load->view(PATH_COMPONENTS . 'buttons/filter', ["url"=> $this->path."/side"], true),
-            'c_btn_add' => $this->access['insert'] ? $this->load->view(PATH_COMPONENTS . 'buttons/add', ["url" => $this->path . "/insert"], true):''
+            'c_btn_filter' => $this->load->view(PATH_COMPONENTS . 'buttons/filter', [
+                "url" => $this->path . "/side"
+            ], true),
+            'right_button' => $right_button
         ];
 
-        $this->template->build('v_show', ['c_show' => $this->load->view(PATH_COMPONENTS . 'views/v_show', $data, true)]);
+        $this->template->build(
+            'v_show',
+            ['c_show' => $this->load->view(PATH_COMPONENTS . 'views/v_show', $data, true)]
+        );
     }
 
     public function show()
@@ -62,18 +88,22 @@ class Treatment extends MY_Owner
         echo $this->customer_model->show();
     }
 
+    public function table_fields()
+    {
+        isAjaxRequestWithPost();
+        $this->function_access('view');
+
+        echo $this->customer_model->table_fields();
+    }
+
     public function insert()
     {
         isAjaxRequestWithPost();
 
-        $set_data = [
-            'form_fields_html' => $this->customer_model->list_fields(),
-        ];
-
         $data = [
             'title_modal' => 'New ' . ucfirst($this->title),
-            'url_form' => base_url() . "customer/process",
-            'form' => $this->load->view('v_form', $set_data, true),
+            'url_form' => $this->url_form,
+            'form' => $this->load->view('v_form', "", true),
         ];
 
         $html = $this->load->view($this->_v_form_modal, $data, true);
@@ -84,23 +114,29 @@ class Treatment extends MY_Owner
 
     public function update($id)
     {
-        isAjaxRequestWithPost();
-
-        $set_data = [
-            'detail' => $this->customer_model->detail($id),
-            'form_fields_html' => $this->customer_model->list_fields(),
-        ];
+        $this->template->title('Manage User');
+        $this->setTitlePage('Manage User');
+        $this->setParent('Master');
+        $this->setJs('customer_detail');
 
         $data = [
-            'title_modal' => 'Edit ' . ucfirst($this->title),
-            'url_form' => base_url() . "customer/process",
-            'form' => $this->load->view('v_form', $set_data, true),
+            'table_doc' => $this->load->view(
+                PATH_COMPONENTS . 'tables/v_table_round',
+                [
+                    'id'      => 'table-data',
+                    'columns' => [
+                        'Document Name',
+                        'Upload',
+                        ''
+                    ],
+                ],
+                true
+            ),
+            'details' => $this->customer_model->detail($id),
+            'url_form' => $this->url_form
         ];
 
-        $html = $this->load->view($this->_v_form_modal, $data, true);
-
-        echo json_encode(['html' => $html]);
-        exit();
+        $this->template->build('v_form_detail', $data);
     }
 
     public function process()
@@ -127,7 +163,7 @@ class Treatment extends MY_Owner
 
         $data = [
             'title_modal' => 'Filter',
-            'url_form' => base_url() . "customer/process",
+            'url_form' => $this->url_form,
             'form' => $this->load->view('v_form_side', "", true),
         ];
 

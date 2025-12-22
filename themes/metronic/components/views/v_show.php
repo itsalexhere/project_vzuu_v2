@@ -18,10 +18,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
 
                         <div class="d-flex align-items-center gap-2 gap-lg-3">
-                            <?= $c_btn_import ?? "" ?>
-                            <?= $c_btn_export ?? "" ?>
-                            <?= $c_btn_add ?? "" ?>
+                            <?php if (!empty($right_button)): ?>
+                                <?php foreach ($right_button as $button): ?>
+                                    <?= $button ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
+
                     </div>
 
                     <?= $tables ?>

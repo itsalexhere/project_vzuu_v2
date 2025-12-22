@@ -3,54 +3,62 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Treatment_model extends MY_Model
 {
+    private $fields;
     use MY_Tables;
 
     public function __construct()
     {
         $this->_tabel = "ms_customer";
         parent::__construct();
+        $this->fields = [
+            'id',
+            'name',
+            'phone',
+            'gender',
+            'category',
+            'date_of_birth',
+            'email',
+            'address',
+            'allergies',
+            'blood_type',
+            'emergency_contact',
+            'skin_type',
+            'favorite_treatments',
+            'note'
+        ];
     }
 
-    public function list_fields()
+    public function table_fields()
     {
-        $this->db->select('
-            b.field_name,
-            b.field_type,
-            b.placeholder,
-            b.column_type,
-            b.is_required,
-            b.status,
-            b.ordering
-        ');
-        $this->db->from("{$this->_table_ms_form} a");
-        $this->db->join("{$this->_table_ms_form_fields} b", 'b.form_id = a.id', 'left');
-        $this->db->where('a.id', '82');
-        $this->db->order_by('b.ordering', 'ASC');
+        $result = $this->db
+            ->select('a.access_view')
+            ->from("{$this->_table_ms_user_accessviewtable} a")
+            ->join("{$this->_table_ms_menus} b", 'b.id = a.ms_menu_id')
+            ->where('b.controller', isControllerExist() ?? "")
+            ->where('a.ms_user_id', $this->_user_id ?? 0)
+            ->get()
+            ->row_array();
 
-        return $this->db->get()->result_array();
+        return json_encode(['data' => $result]);
     }
 
     public function show()
     {
-        $this->db->select('*');
+        $this->db->select($this->fields);
         $this->db->from($this->_tabel);
 
         $result = $this->db->get()->result();
-
-        foreach ($result as &$row) {
-            $row->action = generateActionButtons($row->id, 'customer',[], $this->getCurrentMenuPermissions());
-        }
 
         return json_encode(['data' => $result]);
     }
 
     public function detail($id)
     {
-        $this->db->select('*');
+        $this->db->select($this->fields);
         $this->db->from("{$this->_tabel}");
         $this->db->where('id', $id);
 
-        return $this->db->get()->row();
+        return json_encode($this->db->get()->row());
     }
 
     public function _validate()
@@ -59,7 +67,7 @@ class Treatment_model extends MY_Model
 
         $this->load->library('form_validation');
 
-                $this->form_validation->set_rules('name', 'Name', ['trim', 'required', 'xss_clean']);
+        $this->form_validation->set_rules('name', 'Name', ['trim', 'required', 'xss_clean']);
         $this->form_validation->set_rules('phone', 'Phone', ['trim', 'required', 'xss_clean']);
         $this->form_validation->set_rules('gender', 'Gender', ['trim', 'required', 'xss_clean']);
         $this->form_validation->set_rules('category', 'Category', ['trim', 'required', 'xss_clean']);
@@ -89,16 +97,13 @@ class Treatment_model extends MY_Model
     {
         $this->db->trans_begin();
         try {
-            // Jalankan Validasi
             $response = self::_validate();
             if (!$response['validate']) {
                 throw new Exception('Validation Error');
             }
 
-            // Ambil ID (jika ada)
             $id = clearInput($this->input->post('id'));
 
-            // Ambil semua post data
             $postData = $this->input->post();
 
             $fields = [];
@@ -114,11 +119,10 @@ class Treatment_model extends MY_Model
             }
 
             if (!$execute) {
-                $response['messages'] = 'Insert / Update Data Gagal!';
+                $response['messages'] = 'Error Saved Data!!';
                 throw new Exception('DB Error');
             }
 
-            // Commit
             $this->db->trans_commit();
             $response['success'] = true;
             $response['messages'] = 'Successfully Saved Data';

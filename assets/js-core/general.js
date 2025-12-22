@@ -2391,3 +2391,97 @@ function makeTableSortable(tableId, updateUrl, tableInstance) {
     },
   });
 }
+
+function createDonutChart(canvasId, {
+  labels = [],
+  data = [],
+  colors = [],
+  fontFamily = "Inter",
+  cutout = "70%",
+  radius = "90%",
+  showLegend = true,
+  legendPosition = "right",
+  showPercent = true,
+}) {
+
+  const ctx = document.getElementById(canvasId);
+  if (!ctx) {
+    console.error("Canvas tidak ditemukan:", canvasId);
+    return;
+  }
+
+  return new Chart(ctx, {
+    type: "doughnut",
+    data: {
+      labels: labels,
+      datasets: [{
+        data: data,
+        backgroundColor: colors,
+        borderColor: colors,
+        borderWidth: 2,
+        hoverOffset: 4,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: cutout,
+      radius: radius,
+      plugins: {
+        datalabels: showPercent ? {
+          color: "#ffffff",
+          font: {
+            weight: "bold",
+            size: 12,
+            family: fontFamily,
+          },
+          anchor: "center",
+          align: "center",
+          clamp: true,
+          formatter: (value, ctx) => {
+            const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+            const percent = (value / total) * 100;
+            return percent < 5 ? "" : percent.toFixed(0) + "%";
+          }
+        } : false,
+
+        legend: {
+          display: true,
+          position: "right",
+          align: "center",
+
+          labels: {
+            usePointStyle: true,
+            pointStyle: "circle",
+            boxWidth: 12,
+            boxHeight: 12,
+            padding: 20,
+
+            font: {
+              size: 12,
+              family: fontFamily,
+              lineHeight: 12
+            },
+            color: "#6e6b7b",
+            generateLabels(chart) {
+              const labels = chart.data.labels || [];
+              const dataset = chart.data.datasets[0] || {};
+
+              return labels.map((text, i) => ({
+                text,
+                fillStyle: dataset.backgroundColor[i],
+                strokeStyle: dataset.backgroundColor[i],
+                lineWidth: 0,
+                hidden: false,
+                index: i,
+                pointStyle: "circle"
+              }));
+            }
+
+          }
+        }
+      }
+    }
+  });
+}
+

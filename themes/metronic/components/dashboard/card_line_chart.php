@@ -8,9 +8,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         <select class="form-select form-select-sm w-auto" aria-label="Default select example">
             <option>Year</option>
-            <option>2026</option>
-            <option>2025</option>
-            <option>2024</option>
+            <option>Daily</option>
+            <option>Monthly</option>
+            <option>Yearly</option>
+            <option>Range Date</option>
         </select>
     </div>
 
