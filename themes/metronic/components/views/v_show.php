@@ -12,9 +12,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="card-body">
 
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="d-flex align-items-start gap-2 gap-lg-3">
-                            <?= $c_input_search ?? "" ?>
-                            <?= $c_btn_filter ?? "" ?>
+                        <div class="d-flex align-items-start gap-2 gap-lg-3" style="white-space: nowrap;">
+                            <?php if (!empty($left_button)): ?>
+                                <?php foreach ($left_button as $button): ?>
+                                    <?= $button ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
 
                         <div class="d-flex align-items-center gap-2 gap-lg-3">
@@ -24,8 +27,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </div>
-
                     </div>
+
+                    <?php if (!empty($pills)): ?>
+                        <ul class="nav nav-pills mb-5 fs-5 fw-bold mt-6" id="pillTab" role="tablist">
+                            <?php foreach ($pills as $pills): ?>
+                                <?= $pills ?>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
 
                     <?= $tables ?>
                 </div>

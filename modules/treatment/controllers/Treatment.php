@@ -26,7 +26,6 @@ class Treatment extends MY_Owner
         $this->assetsBuild(['datatables']);
         $this->setJs($this->path);
 
-        
         $get_fields = json_decode($this->table_fields, true)['data']['access_view'];
         $columns = array_map(
             'trim',
@@ -35,24 +34,55 @@ class Treatment extends MY_Owner
 
         $right_button = [];
 
-        if ($this->access['insert']) {
-            $right_button[] = $this->load->view(PATH_COMPONENTS . 'buttons/add', [
-                "url"   => $this->path . "/insert",
-                "label" => "Add " . $this->title
-            ], true);
-        }
-
         if ($this->access['export']) {
             $right_button[] = $this->load->view(PATH_COMPONENTS . 'buttons/export', [
                 "url" => $this->path . "/side"
             ], true);
         }
 
-        if ($this->access['import']) {
-            $right_button[] = $this->load->view(PATH_COMPONENTS . 'buttons/import', [
-                "url" => $this->path . "/side"
+        $right_button[] = $this->load->view(PATH_COMPONENTS . 'buttons/add', [
+            "url"   => $this->path . "/insert",
+            "label" => "Traeatment Category"
+        ], true);
+
+        if ($this->access['insert']) {
+            $right_button[] = $this->load->view(PATH_COMPONENTS . 'buttons/add', [
+                "url"   => $this->path . "/insert",
+                "label" => "New " . $this->title
             ], true);
         }
+
+        $left_button = [
+           $this->load->view(PATH_COMPONENTS . 'input/search', "", true),
+           $this->load->view(PATH_COMPONENTS . 'buttons/filter', [
+                "url" => $this->path . "/side"
+            ], true),
+           $this->load->view(PATH_COMPONENTS . 'input/select', [
+                "url" => $this->path . "/side"
+            ], true)
+        ];
+
+        $pills = [
+            ' <li class="nav-item me-3" role="presentation">
+                            <button class="nav-link active"
+                                data-bs-toggle="pill"
+                                data-bs-target="#pill_detail"
+                                type="button"
+                                role="tab">
+                                Detail
+                            </button>
+                        </li>',
+
+            '<li class="nav-item me-3" role="presentation">
+                            <button class="nav-link"
+                                data-bs-toggle="pill"
+                                data-bs-target="#pill_permissions"
+                                type="button"
+                                role="tab">
+                                Permissions
+                            </button>
+                        </li>'
+        ];
 
         $data = [
             'tables' => $this->load->view(
@@ -67,10 +97,8 @@ class Treatment extends MY_Owner
                 'titlePage'  => $this->title,
                 'parentMenu' => "Master"
             ], true),
-            'c_input_search' => $this->load->view(PATH_COMPONENTS . 'input/search', "", true),
-            'c_btn_filter' => $this->load->view(PATH_COMPONENTS . 'buttons/filter', [
-                "url" => $this->path . "/side"
-            ], true),
+            'pills' => $pills,
+            'left_button' => $left_button,
             'right_button' => $right_button
         ];
 

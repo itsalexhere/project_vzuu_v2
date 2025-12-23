@@ -54,6 +54,13 @@ class Customer extends MY_Owner
             ], true);
         }
 
+        $left_button = [
+            'c_input_search' => $this->load->view(PATH_COMPONENTS . 'input/search', "", true),
+            'c_btn_filter' => $this->load->view(PATH_COMPONENTS . 'buttons/filter', [
+                "url" => $this->path . "/side"
+            ], true)
+        ];
+
         $data = [
             'tables' => $this->load->view(
                 PATH_COMPONENTS . 'tables/v_table_round',
@@ -67,10 +74,7 @@ class Customer extends MY_Owner
                 'titlePage'  => $this->title,
                 'parentMenu' => "Master"
             ], true),
-            'c_input_search' => $this->load->view(PATH_COMPONENTS . 'input/search', "", true),
-            'c_btn_filter' => $this->load->view(PATH_COMPONENTS . 'buttons/filter', [
-                "url" => $this->path . "/side"
-            ], true),
+            'left_button' => $left_button,
             'right_button' => $right_button
         ];
 

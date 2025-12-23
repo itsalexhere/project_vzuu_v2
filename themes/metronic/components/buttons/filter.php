@@ -10,5 +10,5 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <i class="bi bi-funnel fs-4 me-2"></i>
 
-    <?= $label ?? "Filter" ?>
+    <?= $labelFilter ?? "Filter" ?>
 </button>
