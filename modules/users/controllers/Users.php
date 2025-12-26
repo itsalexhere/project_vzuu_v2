@@ -39,10 +39,15 @@ class Users extends MY_Owner
 		$this->assetsBuild(['datatables']);
 		$this->setJs("users");
 
-		$headerTable = array('User ID','name', 'email','status', 'joined date', "last active");
-
 		$data = [
-			'tables' => generateTableHtml($headerTable),
+			'tables' => $this->load->view(
+				PATH_COMPONENTS . 'tables/v_table_round',
+				[
+					'id'      => 'table-data',
+					'columns' => ['User ID', 'name', 'email', 'status', 'joined date', 'last active'],
+				],
+				true
+			),
 			'c_views_header' => $this->load->view(PATH_COMPONENTS . 'views/v_header', [
 				'titlePage' => $this->title,
 				'parentMenu' => "Master"

@@ -9,7 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			</div>
 		</div>
 
-		<div class="app-sidebar-secondary-collapse-d-none text-dark d-flex align-items-center">
+		<div class="app-sidebar-secondary-collapse-d-none text-dark d-none d-lg-flex align-items-center">
 			<img alt="Logo" src="<?= base_url($setting_profile['image'] ?? "") ?>" class="h-25px me-2" />
 			<strong class="fs-3"><?= $setting_profile['name'] ?? "" ?></strong>
 		</div>

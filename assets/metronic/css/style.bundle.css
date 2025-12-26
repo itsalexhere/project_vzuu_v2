@@ -50357,8 +50357,9 @@ html:not([data-theme="dark"]) {
   .app-header .app-header-wrapper .app-container {
     padding: 0 !important;
     display: flex;
-    align-items: stretch;
-    justify-content: end;
+    /* align-items: stretch; */
+    /* justify-content: end; */
+    justify-content: space-between;
   }
 }
 /* .app-sidebar {

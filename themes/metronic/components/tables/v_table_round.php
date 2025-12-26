@@ -5,37 +5,38 @@ if (!is_array($columns) || count($columns) == 0):
     return;
 endif;
 ?>
+<div class="table-responsive" style="white-space: nowrap;">
+    <table class="custom-table" id="<?= $id ?? 'table-data' ?>">
+        <thead>
+            <tr>
+                <?php foreach ($columns as $col): ?>
+                    <th><?= $col !== '' ? ucwords($col) : '' ?></th>
+                <?php endforeach; ?>
+            </tr>
+        </thead>
 
-<table class="custom-table" id="<?= $id ?? 'table-data' ?>">
-    <thead>
-        <tr>
-            <?php foreach ($columns as $col): ?>
-                <th><?= $col !== '' ? ucwords($col) : '' ?></th>
-            <?php endforeach; ?>
-        </tr>
-    </thead>
-
-    <tbody>
-        <?php if (!empty($tbody)): ?>
-            <?php foreach ($tbody as $row): ?>
-                <tr>
-                    <?php foreach ($columns as $key): ?>
-                        <?php
-                        $colName = strtolower($key);
-                        $tdClass = 'align-middle';
-                        if ($colName === 'actions') {
-                            $tdClass .= ' text-end';
-                        }
-                        ?>
-                        <td class="<?= $tdClass ?>">
-                            <?= $row[$key] ?? '' ?>
-                        </td>
-                    <?php endforeach; ?>
-                </tr>
-            <?php endforeach; ?>
-        <?php endif; ?>
-    </tbody>
-</table>
+        <tbody>
+            <?php if (!empty($tbody)): ?>
+                <?php foreach ($tbody as $row): ?>
+                    <tr>
+                        <?php foreach ($columns as $key): ?>
+                            <?php
+                            $colName = strtolower($key);
+                            $tdClass = 'align-middle';
+                            if ($colName === 'actions') {
+                                $tdClass .= ' text-end';
+                            }
+                            ?>
+                            <td class="<?= $tdClass ?>">
+                                <?= $row[$key] ?? '' ?>
+                            </td>
+                        <?php endforeach; ?>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </tbody>
+    </table>
+</div>
 
 <div class="d-flex justify-content-between align-items-center mt-4 flex-wrap gap-3">
     <div class="d-flex align-items-center gap-2">
