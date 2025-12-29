@@ -84,6 +84,12 @@ class Menu_model extends MY_Model
         return $this->db->get()->result();
     }
 
+    public function listMenuCategory()
+    {
+        $this->db->from($this->_table_ms_menu_categories);
+        return $this->db->get()->result();
+    }
+
     public function getUserMenuById($user_id)
     {
         $this->db->select(" b.id as id_access_control,
@@ -118,9 +124,19 @@ class Menu_model extends MY_Model
 
     public function show()
     {
-        $this->db->select('a.id, a.controller, a.name, a.icon, a.parent, a.`order`, a.status, b.name as parent_name', false);
+        $this->db->select(' a.id,
+                            c.name as category, 
+                            a.controller, 
+                            a.name, 
+                            a.icon, 
+                            a.parent, 
+                            a.`order`, 
+                            a.status, 
+                            b.name as parent_name', false);
+
         $this->db->from("{$this->_tabel} a");
         $this->db->join("{$this->_tabel} b", 'b.id = a.parent', 'left');
+        $this->db->join("{$this->_table_ms_menu_categories} c", 'c.id = a.category', 'left');
         $this->db->order_by('a.`order`', 'ASC');
         $this->db->order_by('a.parent', 'DESC');
         $this->db->order_by('a.name', 'ASC');
@@ -197,27 +213,31 @@ class Menu_model extends MY_Model
             $id = clearInput($this->input->post('id'));
             $controller = clearInput($this->input->post('controller'));
             $menu = clearInput($this->input->post('menu'));
+            $ctg = clearInput($this->input->post('category'));
             $parent = clearInput($this->input->post('parent'));
             $icon = clearInput($this->input->post('icon'));
             $status = $this->input->post('status');
 
-            $lastOrder = $this->db->select('MAX(`order`) AS last_order')
-                ->from($this->_tabel)
-                ->get()
-                ->row_array();
-
-            $nextOrder = ($lastOrder['last_order'] ?? 0) + 1;
-
             $fields = [
+                'category'   => $ctg,
                 'controller' => $controller,
                 'name'       => $menu,
                 'parent'     => $parent != '' ? $parent : 0,
                 'icon'       => $icon != '' ? $icon : 'none',
-                'order'       => $nextOrder,
                 'status'     => $status == 'enabled' ? 1 : 0,
             ];
 
             if ($id == '') {
+
+                $lastOrder = $this->db->select('MAX(`order`) AS last_order')
+                    ->from($this->_tabel)
+                    ->get()
+                    ->row_array();
+
+                $nextOrder = ($lastOrder['last_order'] ?? 0) + 1;
+
+                $fields['order'] = $nextOrder;
+
                 $execute = $this->_insertMenuData($fields);
             } else {
                 $execute = $this->_updateMenuData($id, $fields);
@@ -294,6 +314,63 @@ class Menu_model extends MY_Model
             $this->db->trans_commit();
             $response['success'] = true;
             $response['messages'] = 'Successfully Updated Data';
+            return $response;
+        } catch (Exception $e) {
+            $this->db->trans_rollback();
+            return $response;
+        }
+    }
+
+    private function _validate_ctg()
+    {
+        $response = ['success' => false, 'validate' => true, 'messages' => []];
+
+        $response['type'] = 'insert';
+
+        $role_validate = ['trim', 'required', 'xss_clean'];
+
+        $this->form_validation->set_rules('inp_new_menu', 'Category Name', $role_validate);
+
+        $this->form_validation->set_error_delimiters('<div class="' . VALIDATION_MESSAGE_FORM . '">', '</div>');
+
+        if ($this->form_validation->run() === false) {
+            $response['validate'] = false;
+            foreach ($this->input->post() as $key => $value) {
+                $response['messages'][$key] = form_error($key);
+            }
+        }
+
+        return $response;
+    }
+
+    public function save_ctg()
+    {
+        $this->db->trans_begin();
+        try {
+            $response = self::_validate_ctg();
+
+            if (!$response['validate']) {
+                throw new Exception('Error Processing Request', 1);
+            }
+
+            $name = clearInput($this->input->post('inp_new_menu'));
+
+            $execute = $this->db->insert($this->_table_ms_menu_categories, ['name' => ucfirst($name)]);
+
+            if (!$execute) {
+                $response['messages'] = 'Error Insert Data!!';
+                throw new Exception();
+            }
+
+            $insertId = $this->db->insert_id();
+
+            $this->db->trans_commit();
+            $response['success'] = true;
+            $response['messages'] = 'Successfully Insert Data';
+            $response['data'] = [
+                'id'   => $insertId,
+                'name' => $name
+            ];
             return $response;
         } catch (Exception $e) {
             $this->db->trans_rollback();

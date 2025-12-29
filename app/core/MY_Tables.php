@@ -7,6 +7,7 @@ trait MY_Tables
     public $_table_ms_user_accessviewtable = 'ms_user_accessviewtable';
     public $_table_ms_menus = 'ms_menus';
     public $_table_ms_menus_table_views = 'ms_menus_table_views';
+    public $_table_ms_menu_categories = 'ms_menu_categories';
     public $_table_ms_roles = 'ms_roles';
     public $_table_ms_branch = 'ms_branch';
     public $_table_ms_wilayah = 'ms_wilayah';

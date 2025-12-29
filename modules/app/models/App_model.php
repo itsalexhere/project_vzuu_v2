@@ -65,7 +65,7 @@ class App_model extends MY_Model
                                 m.controller,
                                 m.name,
                                 m.icon,
-                                m.category,
+                                q.name as category,
                                 m.parent,
                                 p.name AS parent_name,
                                 p.icon AS parent_icon,
@@ -82,6 +82,7 @@ class App_model extends MY_Model
         $this->db->join($this->_table_ms_user_accesscontrols . " a", "a.ms_user_id = u.id", "inner");
         $this->db->join($this->_table_ms_menus . " m", "m.id = a.ms_menus_id", "inner");
         $this->db->join($this->_table_ms_menus . " p", "p.id = m.parent", "left");
+        $this->db->join("{$this->_table_ms_menu_categories} q", 'q.id = m.category', 'left');
 
         $this->db->group_start();
         $this->db->where('u.email', $email);

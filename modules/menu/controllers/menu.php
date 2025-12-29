@@ -9,7 +9,7 @@ class Menu extends MY_Owner
 
 	public function __construct()
 	{
-		$this->_function_except = ['show', 'process', 'status', 'paging', 'insert_group', 'orders'];
+		$this->_function_except = ['show', 'process', 'status', 'paging', 'insert_group', 'orders', 'process_ctg'];
 		parent::__construct();
 		$this->path = "menu";
 		$this->title = ucfirst($this->path);
@@ -26,7 +26,7 @@ class Menu extends MY_Owner
 			'tables' => $this->load->view(PATH_COMPONENTS .'tables/v_table_round',
 				[
 					'id'      => 'table-data',
-					'columns' => ['no', 'nama', 'controller', 'parent', 'order', 'status', 'action'],
+					'columns' => ['no', 'name', 'controller', 'category','parent', 'order', 'status', 'action'],
 				],
 				true
 			),
@@ -80,7 +80,8 @@ class Menu extends MY_Owner
 		isAjaxRequestWithPost();
 
 		$data = [
-			'list_menu' => $this->menu_model->getParentMenuList()
+			'list_menu' => $this->menu_model->getParentMenuList(),
+			'list_menu_ctg' => $this->menu_model->listMenuCategory()
 		];
 
 		$data = array(
@@ -101,7 +102,8 @@ class Menu extends MY_Owner
 
 		$data = [
 			'detail' => $this->menu_model->_getMenuById($id),
-			'list_menu' => $this->menu_model->getParentMenuList()
+			'list_menu' => $this->menu_model->getParentMenuList(),
+			'list_menu_ctg' => $this->menu_model->listMenuCategory()
 		];
 
 		$data = array(
@@ -121,6 +123,16 @@ class Menu extends MY_Owner
 		$this->function_access('insert');
 
 		$response = $this->menu_model->save();
+		echo json_encode($response);
+		exit();
+	}
+
+	public function process_ctg()
+	{
+		isAjaxRequestWithPost();
+		$this->function_access('insert');
+
+		$response = $this->menu_model->save_ctg();
 		echo json_encode($response);
 		exit();
 	}

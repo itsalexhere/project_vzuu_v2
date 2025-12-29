@@ -26,6 +26,7 @@ function base_url() {
   }
 }
 
+
 var url_asset = base_url() + "assets/uploads/";
 var url_asset_metronic = base_url() + "assets/metronic/";
 
@@ -47,6 +48,28 @@ function loadingButtonOff(selector, text) {
 
 function enabledButton(selector) {
   selector.prop("disabled", false);
+}
+
+function errorValidation(jqXHR) {
+  switch (jqXHR.status) {
+      case 401:
+        sweetAlertMessageWithConfirmNotShowCancelButton(
+          "Your session has expired or invalid. Please relogin",
+          function () {
+            window.location.href = base_url();
+          }
+        );
+        break;
+
+      default:
+        sweetAlertMessageWithConfirmNotShowCancelButton(
+          "We are sorry, but you do not have access to this service",
+          function () {
+            location.reload();
+          }
+        );
+        break;
+  }
 }
 
 $(document).on("keyup", ":input", function () {

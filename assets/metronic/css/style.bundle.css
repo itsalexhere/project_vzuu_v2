@@ -2107,8 +2107,8 @@ progress {
 .form-control {
   display: block;
   width: 100%;
-  padding: 0.45rem 0.75rem;
-  font-size: 0.95rem;
+  padding: 0.6rem 0.9rem;
+  font-size: 14px;
   font-weight: 500;
   line-height: 1.4;
   color: #5e6278;
@@ -2117,7 +2117,7 @@ progress {
   border: 1px solid #e1e3ea;
   appearance: none;
   border: 1px solid #d6d6d6;
-  border-radius: 0.475rem;    /* Smooth modern curve */
+  border-radius: 10px;
   transition: all 0.2s ease;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
   /* transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; */
@@ -37531,8 +37531,8 @@ code:not([class*="language-"]) {
   border: 1px solid var(--kt-form-select-border-color);
   box-shadow: var(--kt-form-select-box-shadow);
   appearance: none;
-  padding: 0.45rem 2rem 0.45rem 0.75rem !important;
-  border-radius: 3px;
+  padding: 0.6rem 0.9rem !important;
+  border-radius: 5px;
   font-size: 0.95rem;
   font-weight: 500;
 }
