@@ -2,7 +2,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 
-<div class="card card-flush h-100 p-4" style="border-radius: 5px;">
+<div class="card card-flush h-100 p-4" style="border-radius: 8px;">
 
     <div class="d-flex justify-content-between align-items-center">
         <span class="fs-6 fw-bold text-gray-600"><?= $label_card ?? "" ?></span>

@@ -19,14 +19,24 @@ class Menu extends MY_Owner
 	public function Index()
 	{
 		$this->template->title(ucfirst($this->title));
-		$this->assetsBuild(['datatables','sortable']);
+		$this->assetsBuild(['datatables', 'sortable']);
 		$this->setJs($this->path);
 
+		$right_button = [];
+
+		if ($this->access['insert']) {
+			$right_button[] = $this->load->view(PATH_COMPONENTS . 'buttons/add', [
+				"url"   => $this->path . "/insert",
+				"label" => "Add " . $this->title
+			], true);
+		}
+
 		$data = [
-			'tables' => $this->load->view(PATH_COMPONENTS .'tables/v_table_round',
+			'tables' => $this->load->view(
+				PATH_COMPONENTS . 'tables/v_table_round',
 				[
 					'id'      => 'table-data',
-					'columns' => ['no', 'name', 'controller', 'category','parent', 'order', 'status', 'action'],
+					'columns' => ['no', 'name', 'controller', 'category', 'parent', 'order', 'status', 'action'],
 				],
 				true
 			),
@@ -35,14 +45,7 @@ class Menu extends MY_Owner
 				'parentMenu' => "Master"
 			], true),
 			'c_input_search' => $this->load->view(PATH_COMPONENTS . 'input/search', "", true),
-			'c_btn_add' => $this->access['insert'] ? $this->load->view(
-				PATH_COMPONENTS . 'buttons/add',
-				[
-					"url" => $this->path . "/insert", 
-					"label" => "Add " . $this->title
-				],
-				true
-			) : ''
+			'right_button' => $right_button
 		];
 
 		$this->template->build('v_show', ['c_show' => $this->load->view(PATH_COMPONENTS . 'views/v_show', $data, true)]);
@@ -61,7 +64,8 @@ class Menu extends MY_Owner
 		isAjaxRequestWithPost();
 
 		$data = [
-			'list_menu' => $this->menu_model->getParentMenuList()
+			'list_menu' => $this->menu_model->getParentMenuList(),
+			'list_menu_ctg' => $this->menu_model->listMenuCategory()
 		];
 
 		$data = array(
